@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="com.ntt_DOANNGANH_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.ntt.pojo.Donhang</class>
+    <class>com.ntt.pojo.Baidangvanban</class>
+    <class>com.ntt.pojo.KhoahocDecuong</class>
+    <class>com.ntt.pojo.KhuyenmaiUser</class>
+    <class>com.ntt.pojo.User</class>
+    <class>com.ntt.pojo.Luonggiaovien</class>
+    <class>com.ntt.pojo.Binhluan</class>
+    <class>com.ntt.pojo.Videobaidang</class>
+    <class>com.ntt.pojo.Khuyenmai</class>
+    <class>com.ntt.pojo.Bangluong</class>
+    <class>com.ntt.pojo.Otp</class>
+    <class>com.ntt.pojo.Danhmuc</class>
+    <class>com.ntt.pojo.Thich</class>
+    <class>com.ntt.pojo.Loaigiaovien</class>
+    <class>com.ntt.pojo.Khoahoc</class>
+    <class>com.ntt.pojo.Chucvu</class>
+    <class>com.ntt.pojo.UserLoaigiaovien</class>
+    <class>com.ntt.pojo.Ngayhocbu</class>
+    <class>com.ntt.pojo.Thoigiantrongtuan</class>
+    <class>com.ntt.pojo.KhoahocKhuyenmai</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/doannganhdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="123456"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="baseLayout"
+                template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header"
+                       value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="sidebar"
+                       value="/WEB-INF/layout/sidebar.jsp" />
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp" />
+        
+    </definition>
+    <definition name="users" extends="baseLayout">
+        <put-attribute name="title" value="User Management" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/users.jsp" />
+    </definition>
+    
+    <definition name="add-user" extends="baseLayout">
+        <put-attribute name="title" value="Account" />
+        <put-attribute name="content" value="/WEB-INF/pages/add-user.jsp" />
+    </definition>
+    
+    <definition name="create-courses" extends="baseLayout">
+        <put-attribute name="title" value="Create Course" />
+        <put-attribute name="content" value="/WEB-INF/pages/create-courses.jsp" />
+    </definition>
+
+    <definition name="list-courses" extends="baseLayout">
+        <put-attribute name="title" value="List of Course" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-courses.jsp" />
+    </definition>
+    
+    <definition name="outline" extends="baseLayout">
+        <put-attribute name="title" value="OutLine" />
+        <put-attribute name="content" value="/WEB-INF/pages/outline.jsp" />
+    </definition>
+    
+    <definition name="course-schedule" extends="baseLayout">
+        <put-attribute name="title" value="Course Schedule" />
+        <put-attribute name="content" value="/WEB-INF/pages/course-schedule.jsp" />
+    </definition>
+    
+    <definition name="create-schedule" extends="baseLayout">
+        <put-attribute name="title" value="Create Schedule" />
+        <put-attribute name="content" value="/WEB-INF/pages/create-schedule.jsp" />
+    </definition>
+    
+    <definition name="chondayhocbuForm" extends="baseLayout">
+        <put-attribute name="title" value="Tạo ngày học bù" />
+        <put-attribute name="content" value="/WEB-INF/pages/chondayhocbuForm.jsp" />
+    </definition>
+    
+    <definition name="list-ngayhocbu" extends="baseLayout">
+        <put-attribute name="title" value="Ngày Học Bù" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-ngayhocbu.jsp" />
+    </definition>
+    
+    <definition name="list-order" extends="baseLayout">
+        <put-attribute name="title" value="Ngày Học Bù" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-order.jsp" />
+    </definition>
+    
+    <definition name="list-hesoluonggiaovien" extends="baseLayout">
+        <put-attribute name="title" value="Ngày Học Bù" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-hesoluonggiaovien.jsp" />
+    </definition>
+
+</tiles-definitions>
+
