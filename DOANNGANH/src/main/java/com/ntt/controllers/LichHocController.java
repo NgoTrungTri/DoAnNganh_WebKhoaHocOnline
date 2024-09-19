@@ -19,7 +19,9 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,6 +126,9 @@ public class LichHocController {
         Khoahoc course = khoahocService.getCourseById(courseId);
         List<Thoigiantrongtuan> previewSchedule = new ArrayList<>();
 
+        // Tạo một Set để lưu trữ các ngày học đã được thêm
+        Set<LocalDate> uniqueDaysSet = new HashSet<>();
+
         // Tính danh sách lịch học dự kiến
         for (Thoigiantrongtuan buoiHoc : buoiHocList.getBuoiHocList()) {
             Calendar cal = Calendar.getInstance();
@@ -134,18 +139,26 @@ public class LichHocController {
             LocalDate endDate = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
 
             List<LocalDate> ngayHocList = tinhDanhSachNgayHoc(startDate, endDate, buoiHoc.getTenThuTrongTuan());
+
+            // Kiểm tra từng ngày học xem có bị trùng không
             for (LocalDate ngayHoc : ngayHocList) {
-                Thoigiantrongtuan tgtt = new Thoigiantrongtuan();
-                tgtt.setNgayHoc(java.sql.Date.valueOf(ngayHoc));
-                tgtt.setThoiGianBatDau(buoiHoc.getThoiGianBatDau());
-                tgtt.setThoiGianKetThuc(buoiHoc.getThoiGianKetThuc());
-                tgtt.setTenThuTrongTuan(buoiHoc.getTenThuTrongTuan());
-                tgtt.setKhoaHocId(course);
-                previewSchedule.add(tgtt);
+                if (!uniqueDaysSet.contains(ngayHoc)) { // Nếu ngày học chưa có trong Set
+                    // Thêm ngày học vào Set để đánh dấu đã xử lý
+                    uniqueDaysSet.add(ngayHoc);
+
+                    // Tạo buổi học mới
+                    Thoigiantrongtuan tgtt = new Thoigiantrongtuan();
+                    tgtt.setNgayHoc(java.sql.Date.valueOf(ngayHoc));
+                    tgtt.setThoiGianBatDau(buoiHoc.getThoiGianBatDau());
+                    tgtt.setThoiGianKetThuc(buoiHoc.getThoiGianKetThuc());
+                    tgtt.setTenThuTrongTuan(buoiHoc.getTenThuTrongTuan());
+                    tgtt.setKhoaHocId(course);
+                    previewSchedule.add(tgtt);
+                }
             }
         }
 
-        // Nếu người dùng nhấn "Lưu Lịch Học", thực hiện việc lưu vào database
+        // Khi người dùng nhấn "Lưu Lịch Học", thực hiện việc lưu vào database
         if ("save".equals(action)) {
             for (Thoigiantrongtuan buoiHoc : previewSchedule) {
                 tinhThoiLuong(buoiHoc);
@@ -155,13 +168,15 @@ public class LichHocController {
             return "redirect:/view-schedule/" + courseId;
         }
 
-        model.addAttribute("previewSchedule", previewSchedule);
-        buoiHocList.setBuoiHocList(previewSchedule);
-        model.addAttribute("buoiHocList", buoiHocList);
+        if ("preview".equals(action)) {
+            model.addAttribute("previewSchedule", previewSchedule);
+            buoiHocList.setBuoiHocList(previewSchedule);
+            model.addAttribute("buoiHocList", buoiHocList);
+        }
+
         return "create-schedule";
     }
 
-    
     /////Ngày học bù 
     @GetMapping("/chonngayhocbu/{ngayBuId}")
     public String showNgayHocBuForm(@PathVariable("ngayBuId") int ngayBuId, Model model) {
@@ -208,7 +223,7 @@ public class LichHocController {
         model.addAttribute("ngayhocbuList", ngayhocbuList);
         model.addAttribute("khoaHocId", khoaHocId);
 
-        return "list-ngayhocbu";  
+        return "list-ngayhocbu";
     }
 
     // Hàm tính ra danh sách ngày học

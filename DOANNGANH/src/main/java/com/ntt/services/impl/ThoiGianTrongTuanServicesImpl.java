@@ -7,6 +7,8 @@ package com.ntt.services.impl;
 import com.ntt.pojo.Thoigiantrongtuan;
 import com.ntt.repositories.ThoiGianTrongTuanRepository;
 import com.ntt.services.ThoiGianTrongTuanServices;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,10 @@ public class ThoiGianTrongTuanServicesImpl implements ThoiGianTrongTuanServices{
     @Override
     public List<Thoigiantrongtuan> listLichGiangDayGiaoVien(int i) {
         return tkb.listLichGiangDayGiaoVien(i);
+    }
+
+    @Override
+    public boolean checkTrungLich(Date date,Date time, Date time1) {
+        return this.checkTrungLich(date, time, time1);
     }
 }

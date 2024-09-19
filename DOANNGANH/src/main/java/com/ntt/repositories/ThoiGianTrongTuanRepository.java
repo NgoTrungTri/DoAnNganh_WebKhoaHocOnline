@@ -5,6 +5,7 @@
 package com.ntt.repositories;
 
 import com.ntt.pojo.Thoigiantrongtuan;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface ThoiGianTrongTuanRepository {
     Thoigiantrongtuan findById(int buoiHocId);
 
     List<Thoigiantrongtuan> listLichGiangDayGiaoVien(int giaoVienId);
+    
+    boolean checkTrungLich(Date ngayHoc, Date thoiGianBatDau, Date thoiGianKetThuc);
 }

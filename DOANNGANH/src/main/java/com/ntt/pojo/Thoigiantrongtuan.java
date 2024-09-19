@@ -177,5 +177,6 @@ public class Thoigiantrongtuan implements Serializable {
     public String toString() {
         return "com.ntt.pojo.Thoigiantrongtuan[ id=" + id + " ]";
     }
+    
 
 }

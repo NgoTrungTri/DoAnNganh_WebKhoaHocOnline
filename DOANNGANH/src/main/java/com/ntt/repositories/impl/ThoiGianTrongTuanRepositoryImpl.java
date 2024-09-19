@@ -6,6 +6,8 @@ package com.ntt.repositories.impl;
 
 import com.ntt.pojo.Thoigiantrongtuan;
 import com.ntt.repositories.ThoiGianTrongTuanRepository;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -62,6 +64,21 @@ public class ThoiGianTrongTuanRepositoryImpl implements ThoiGianTrongTuanReposit
         query.setParameter("giaoVienId", giaoVienId);
 
         return query.getResultList();
+    }
+
+    @Override
+    public boolean checkTrungLich(Date ngayHoc, Date thoiGianBatDau, Date thoiGianKetThuc) {
+        Session session = sessionFactory.getCurrentSession();
+
+        String hql = "SELECT COUNT(t) FROM Thoigiantrongtuan t WHERE t.ngayHoc = :ngayHoc AND t.thoiGianBatDau = :thoiGianBatDau AND t.thoiGianKetThuc = :thoiGianKetThuc";
+        Query<Long> query = session.createQuery(hql, Long.class);
+        query.setParameter("ngayHoc", ngayHoc);
+        query.setParameter("thoiGianBatDau", thoiGianBatDau);
+        query.setParameter("thoiGianKetThuc", thoiGianKetThuc);
+
+        long count = query.uniqueResult();
+
+        return count > 0;
     }
 
 }

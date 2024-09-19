@@ -65,8 +65,7 @@
         </div>
     </div>
 
-    <!-- Hiển thị lịch học dự kiến nếu có -->
-    <c:if test="${not empty previewSchedule}">
+<c:if test="${not empty previewSchedule}">
         <div class="card mt-4">
             <div class="card-body">
                 <h5 class="card-title">Lịch Học Dự Kiến</h5>

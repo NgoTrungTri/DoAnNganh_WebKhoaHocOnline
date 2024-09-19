@@ -8,6 +8,7 @@ com\ntt\pojo\KhoahocKhuyenmai_.class
 com\ntt\pojo\Khoahoc_.class
 com\ntt\repositories\impl\DanhMucRepositoryImpl.class
 com\ntt\services\KhoaHocServices.class
+com\ntt\controllers\ApiUserController.class
 com\ntt\pojo\Donhang.class
 com\ntt\pojo\UserLoaigiaovien_.class
 com\ntt\services\UserServices.class
