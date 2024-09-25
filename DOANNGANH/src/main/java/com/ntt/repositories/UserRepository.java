@@ -20,4 +20,5 @@ public interface UserRepository {
     List<User> getUser();
     void addOrUpdateUser(User u);
     List<User> getUsersByUserRole(String userRole);
+    
 }

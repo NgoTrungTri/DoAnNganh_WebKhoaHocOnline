@@ -41,4 +41,21 @@ public class KhoaHocServicesImpl implements KhoaHocServices {
     public Khoahoc getKhoaHocByBuoiHoc(Thoigiantrongtuan t) {
         return khoaHocRepository.getKhoaHocByBuoiHoc(t);
     }
+
+    @Override
+    public List<Khoahoc> getKhoaHocByGiaoVien(int giaoVienId) {
+        return khoaHocRepository.getKhoaHocByGiaoVien(giaoVienId);
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocActiveInMonth(int month, int year) {
+        return khoaHocRepository.getKhoaHocActiveInMonth(month, year);
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocActiveInQuarter(int i, int i1) {
+        return khoaHocRepository.getKhoaHocActiveInQuarter(i, i1);
+    }
+    
+    
 }

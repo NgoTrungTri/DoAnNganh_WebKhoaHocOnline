@@ -67,6 +67,7 @@ public class UserServicesImpl implements UserServices {
 
     @Override
     public void addOrUpdateUser(User u) {
+        System.out.println("User file: " + u.getFile());
         if (!u.getFile().isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(u.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
@@ -93,4 +94,6 @@ public class UserServicesImpl implements UserServices {
     public List<User> getUsersByUserRole(String userRole) {
         return this.userRepo.getUsersByUserRole(userRole);
     }
+    
+    
 }

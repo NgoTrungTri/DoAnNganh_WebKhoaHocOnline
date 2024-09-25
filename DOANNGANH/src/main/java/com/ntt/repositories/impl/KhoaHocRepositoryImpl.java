@@ -3,6 +3,9 @@ package com.ntt.repositories.impl;
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Thoigiantrongtuan;
 import com.ntt.repositories.KhoaHocRepository;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZonedDateTime;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -65,5 +68,73 @@ public class KhoaHocRepositoryImpl implements KhoaHocRepository {
         Khoahoc khoaHoc = query.uniqueResult();
 
         return khoaHoc;
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocByGiaoVien(int giaoVienId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        String hql = "FROM Khoahoc k WHERE k.idGVPhuTrach.id = :giaoVienId";
+        Query query = session.createQuery(hql);
+        query.setParameter("giaoVienId", giaoVienId);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocActiveInMonth(int thang, int year) {
+        Session session = sessionFactory.getCurrentSession();
+
+        // Tính toán ngày đầu tháng và ngày cuối tháng
+        LocalDate startDate = LocalDate.of(year, thang, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        // Chuyển đổi LocalDate thành java.sql.Date
+        java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
+        java.sql.Date sqlEndDate = java.sql.Date.valueOf(endDate);
+
+        String hql = "FROM Khoahoc k WHERE k.trangThai = true "
+                + "AND k.ngayKetThuc >= :startDate "
+                + "AND k.ngayBatDau <= :endDate";
+
+        Query<Khoahoc> query = session.createQuery(hql, Khoahoc.class);
+        query.setParameter("startDate", sqlStartDate);
+        query.setParameter("endDate", sqlEndDate);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocActiveInQuarter(int quy, int year) {
+        Session session = sessionFactory.getCurrentSession();
+
+        // Xác định tháng bắt đầu và tháng kết thúc của quý
+        int startMonth = (quy - 1) * 3 + 1;
+        int endMonth = startMonth + 2;
+
+        ZonedDateTime startDateTime = ZonedDateTime.now()
+                .withYear(year)
+                .withMonth(startMonth)
+                .withDayOfMonth(1)
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
+        LocalDate startDate = startDateTime.toLocalDate();
+        LocalDate endDate = LocalDate.of(year, endMonth, YearMonth.of(year, endMonth).lengthOfMonth());
+
+        // Chuyển đổi LocalDate thành java.sql.Date
+        java.sql.Date sqlStartDate = java.sql.Date.valueOf(startDate);
+        java.sql.Date sqlEndDate = java.sql.Date.valueOf(endDate);
+
+        String hql = "FROM Khoahoc k WHERE k.trangThai = true "
+                + "AND k.ngayKetThuc >= :startDate "
+                + "AND k.ngayBatDau <= :endDate";
+
+        Query<Khoahoc> query = session.createQuery(hql, Khoahoc.class);
+        query.setParameter("startDate", sqlStartDate);
+        query.setParameter("endDate", sqlEndDate);
+
+        return query.getResultList();
     }
 }

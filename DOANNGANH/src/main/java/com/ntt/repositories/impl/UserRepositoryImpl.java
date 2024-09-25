@@ -44,6 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
         return session.get(User.class, id);
     }
 
+    @Override
     public List<User> getUsersByUserRole(String userRole) {
         TypedQuery<User> query = entityManager.createQuery(
                 "SELECT u FROM User u WHERE u.userRole = :userRole", User.class);
@@ -57,7 +58,12 @@ public class UserRepositoryImpl implements UserRepository {
         Query q = s.createQuery("FROM User WHERE username = :username");
         q.setParameter("username", username);
 
-        return (User) q.getSingleResult();
+        List<User> users = q.getResultList();
+        if (users.isEmpty()) {
+            return null; 
+        }
+
+        return users.get(0); 
     }
 
     @Override
@@ -69,12 +75,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void addOrUpdateUser(User u) {
-        Session s = this.sessionFactory.getObject().getCurrentSession();       
+        Session s = this.sessionFactory.getObject().getCurrentSession();
         //bammatkhau
         if (u.getPassword() != null) {
             String hashedPassword = passEncoder.encode(u.getPassword());
             u.setPassword(hashedPassword);
-        }       
+        }
         s.saveOrUpdate(u);
     }
 

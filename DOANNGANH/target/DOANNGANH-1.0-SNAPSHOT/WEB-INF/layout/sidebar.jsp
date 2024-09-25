@@ -140,7 +140,6 @@
             <div class="dropdown">
                 <a href="#">Quản lý Đơn Hàng</a>
                 <div class="dropdown-content">
-                    <a href="<c:url value="/"/>">Xem Đơn Hàng Khóa Học</a>
                     <a href="<c:url value="/donhang/viewpager"/>">Xem Đơn Hàng</a>
                 </div>
             </div>
@@ -149,7 +148,7 @@
                 <a href="#">Quản lý Lương</a>
                 <div class="dropdown-content">
                     <a href="<c:url value="/hesoluong"/>">Hệ Số Lương Giáo Viên</a>
-                    <a href="<c:url value=""/>">Xuất Bảng Lương</a>
+                    <a href="<c:url value="/bang-luong"/>">Xuất Bảng Lương</a>
                 </div>
             </div>
 
@@ -166,8 +165,8 @@
                     <div class="dropdown">
                         <a href="#">Quản lý Doanh Thu</a>
                         <div class="dropdown-content">
-                            <a href="<c:url value=""/>">Doanh Thu Theo Tháng</a> 
-                            <a href="<c:url value=""/>">Doanh Thu Theo Quý</a> 
+                            <a href="<c:url value="/doanh-thu"/>">Doanh Thu Theo Tháng</a> 
+                            <a href="<c:url value="/doanh-thu-quy"/>">Doanh Thu Theo Quý</a> 
                             <a href="<c:url value="/"/>">Xem Doanh Thu Khóa Học</a>
                         </div>
                     </div>

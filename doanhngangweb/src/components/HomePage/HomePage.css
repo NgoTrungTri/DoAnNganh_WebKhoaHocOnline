@@ -1,0 +1,121 @@
+.banner-container {
+  margin-top: -18px;
+  width: 1320px;
+  height: auto;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Phần hiển thị khóa học */
+.courses-container {
+  margin-top: 50px;
+  width: 1320px;
+  text-align: center;
+}
+
+.courses-container h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.courses-grid {
+  display: flex; 
+  align-items: center;
+  justify-content: space-between; 
+  width: 1320px; 
+  margin: 0 auto; 
+}
+
+.newLine {
+  width: 1320px;
+  text-align: center;
+  height: 100px;
+  background-color: #0a58ca;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.courses-wrapper {
+  width: 1420px;
+  margin-left: -50px;
+
+}
+
+.course-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-image {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.course-card h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.course-card p {
+  font-size: 16px;
+  color: #666;
+}
+
+.course-price {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.buy-button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.buy-button:hover {
+  background-color: #cc5200;
+}
+
+.prev-button, .next-button, .buy-button {
+  padding: 5px 10px; 
+  font-size: 12px; 
+  background-color: #007BFF; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+}
+
+.prev-button, .next-button {
+  flex: 0 0 auto; /* Không cho phép nút co giãn */
+  margin: 0 10px; /* Đặt khoảng cách giữa các nút */
+}
+
+.prev-button:disabled, .next-button:disabled {
+  background-color: #ccc; /* Màu nền cho nút vô hiệu hóa */
+  cursor: not-allowed; /* Con trỏ chuột vô hiệu hóa */
+}

@@ -128,7 +128,7 @@ public class DonHangRepositoryImpl implements DonHangRepository {
 
     @Override
     public int countDonhangsByKhoaHocName(String tenKhoaHoc) {
-        String hql = "SELECT COUNT(d) FROM Donhang d WHERE d.khoaHoc.tenKhoaHoc LIKE :tenKhoaHoc";
+        String hql = "SELECT COUNT(d) FROM Donhang d WHERE d.khoaHocId.tenKhoaHoc LIKE :tenKhoaHoc";
         Query<Long> query = getCurrentSession().createQuery(hql, Long.class);
         query.setParameter("tenKhoaHoc", tenKhoaHoc);
         return query.uniqueResult().intValue();

@@ -23,4 +23,10 @@ public interface KhoaHocRepository {
     List<Khoahoc> getKhoaHocByDanhMuc(String Danhmuc);
 
     Khoahoc getKhoaHocByBuoiHoc(Thoigiantrongtuan buoiHoc);
+    
+    List<Khoahoc> getKhoaHocByGiaoVien (int giaoVienId); 
+    
+    public List<Khoahoc> getKhoaHocActiveInMonth(int thang, int year);
+    
+    List<Khoahoc> getKhoaHocActiveInQuarter(int quy, int nam);
 }

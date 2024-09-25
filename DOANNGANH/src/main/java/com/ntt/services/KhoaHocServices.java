@@ -18,4 +18,7 @@ public interface KhoaHocServices {
     List<Khoahoc> getAllCourses();
     List<Khoahoc> getKhoaHocByDanhMuc(String Danhmuc);
     public Khoahoc getKhoaHocByBuoiHoc(Thoigiantrongtuan t);
+    public List<Khoahoc> getKhoaHocByGiaoVien(int giaoVienId);
+    public List<Khoahoc> getKhoaHocActiveInMonth(int thang, int year);
+    public List<Khoahoc> getKhoaHocActiveInQuarter(int quy, int nam);
 }

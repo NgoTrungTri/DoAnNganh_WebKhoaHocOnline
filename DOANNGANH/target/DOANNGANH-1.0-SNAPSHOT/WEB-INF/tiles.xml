@@ -60,13 +60,28 @@
     </definition>
     
     <definition name="list-order" extends="baseLayout">
-        <put-attribute name="title" value="Ngày Học Bù" />
+        <put-attribute name="title" value="Danh Sách Đơn hàng" />
         <put-attribute name="content" value="/WEB-INF/pages/list-order.jsp" />
     </definition>
     
     <definition name="list-hesoluonggiaovien" extends="baseLayout">
-        <put-attribute name="title" value="Ngày Học Bù" />
+        <put-attribute name="title" value="Hệ Số Lương Giáo Viên" />
         <put-attribute name="content" value="/WEB-INF/pages/list-hesoluonggiaovien.jsp" />
+    </definition>
+    
+    <definition name="xuatbangluongpdf" extends="baseLayout">
+        <put-attribute name="title" value="Bảng Lương" />
+        <put-attribute name="content" value="/WEB-INF/pages/xuatbangluongpdf.jsp" />
+    </definition>
+    
+    <definition name="doanhThu" extends="baseLayout">
+        <put-attribute name="title" value="Doanh Thu Theo Tháng" />
+        <put-attribute name="content" value="/WEB-INF/pages/doanhThu.jsp" />
+    </definition>
+    
+    <definition name="doanhThuQuy" extends="baseLayout">
+        <put-attribute name="title" value="Doanh Thu Theo Quý" />
+        <put-attribute name="content" value="/WEB-INF/pages/doanhThuQuy.jsp" />
     </definition>
 
 </tiles-definitions>

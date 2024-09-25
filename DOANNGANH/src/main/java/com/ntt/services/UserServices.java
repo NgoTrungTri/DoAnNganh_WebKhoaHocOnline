@@ -20,4 +20,5 @@ public interface UserServices extends UserDetailsService{
     void addOrUpdateUser(User u);
     boolean authUser(String username, String password);
     List<User> getUsersByUserRole(String userRole);
+    
 }

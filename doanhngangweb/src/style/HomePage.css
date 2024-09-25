@@ -1,0 +1,39 @@
+/* src/styles/HomePage.css */
+
+.hero-banner .carousel-item {
+    height: 400px;
+}
+
+.hero-banner .carousel-item img {
+    object-fit: cover;
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+.btn-primary, .btn-outline-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+section h2 {
+    color: #333;
+    margin-bottom: 30px;
+}

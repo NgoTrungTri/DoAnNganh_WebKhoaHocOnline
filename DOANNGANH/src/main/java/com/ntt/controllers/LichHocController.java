@@ -256,4 +256,6 @@ public class LichHocController {
             buoiHoc.setThoiLuong(minutes > 0 ? hours + 1 : hours);
         }
     }
+    
+    
 }

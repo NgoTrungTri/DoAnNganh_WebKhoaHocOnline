@@ -13,10 +13,10 @@
     <form id="filterForm" action="<c:url value='/' />" method="get" class="d-flex">
         <div class="me-3">
             <select name="userRole" id="userRole" class="form-select" style="width: 350px;">
-                 <option value="" ${param.userRole == null || param.userRole == '' ? 'selected' : ''}>Tất cả</option>
-    <option value="ROLE_NV" ${param.userRole == 'ROLE_NV' ? 'selected' : ''}>Nhân Viên</option>
-    <option value="ROLE_GV" ${param.userRole == 'ROLE_GV' ? 'selected' : ''}>Giáo Viên</option>
-    <option value="ROLE_HV" ${param.userRole == 'ROLE_HV' ? 'selected' : ''}>Học Viên</option>       
+                <option value="" ${param.userRole == null || param.userRole == '' ? 'selected' : ''}>Tất cả</option>
+                <option value="ROLE_NV" ${param.userRole == 'ROLE_NV' ? 'selected' : ''}>Nhân Viên</option>
+                <option value="ROLE_GV" ${param.userRole == 'ROLE_GV' ? 'selected' : ''}>Giáo Viên</option>
+                <option value="ROLE_HV" ${param.userRole == 'ROLE_HV' ? 'selected' : ''}>Học Viên</option>       
             </select>
         </div>
     </form>
@@ -53,14 +53,14 @@
 </table>
 
 <script>
-    document.getElementById('userRole').addEventListener('change', function() {
+    document.getElementById('userRole').addEventListener('change', function () {
         var selectedUserRole = document.getElementById('userRole').value;
         document.getElementById('filterForm').submit();
-        
-        if (selectedUserRole === "" ) {
+
+        if (selectedUserRole === "") {
             event.preventDefault();
-            window.location.href = '<c:url value="/" />';   
+            window.location.href = '<c:url value="/" />';
         }
     });
-    
+
 </script>
