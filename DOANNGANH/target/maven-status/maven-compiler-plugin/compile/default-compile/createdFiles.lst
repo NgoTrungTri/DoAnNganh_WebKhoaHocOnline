@@ -9,6 +9,7 @@ com\ntt\pojo\KhoahocKhuyenmai_.class
 com\ntt\pojo\Khoahoc_.class
 com\ntt\repositories\impl\DanhMucRepositoryImpl.class
 com\ntt\services\KhoaHocServices.class
+com\ntt\controllers\ApiBaiDangController.class
 com\ntt\services\impl\BaiDangServicesImpl.class
 com\ntt\controllers\ApiUserController.class
 com\ntt\pojo\Donhang.class
@@ -49,6 +50,7 @@ com\ntt\configs\TilesConfig.class
 com\ntt\controllers\DonHangController.class
 com\ntt\pojo\DoanhThuQuyForm.class
 com\ntt\services\impl\KhoaHocServicesImpl.class
+com\ntt\pojo\BaiDangRequest.class
 com\ntt\pojo\Khuyenmai_.class
 com\ntt\controllers\KhoaHocController.class
 com\ntt\services\DeCuongServices.class
@@ -84,6 +86,7 @@ com\ntt\controllers\DeCuongController.class
 com\ntt\configs\WebAppContextConfig.class
 com\ntt\repositories\impl\NgayHocBuRepositoryImpl.class
 com\ntt\repositories\NgayHocBuRepository.class
+com\ntt\controllers\BaiDangController.class
 com\ntt\repositories\impl\DonHangRepositoryImpl.class
 com\ntt\services\NgayHocBuServices.class
 com\ntt\services\impl\ChucVuServicesImpl.class

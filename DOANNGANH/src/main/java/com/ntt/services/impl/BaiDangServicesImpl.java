@@ -5,6 +5,7 @@
 package com.ntt.services.impl;
 
 import com.ntt.pojo.Baidangvanban;
+import com.ntt.pojo.Videobaidang;
 import com.ntt.repositories.BaiDangRepository;
 import com.ntt.services.BaiDangServices;
 import java.util.List;
@@ -34,6 +35,11 @@ public class BaiDangServicesImpl implements BaiDangServices{
     @Override
     public List<Baidangvanban> findByDanhMuc_Id(int danhMucId) {
         return baiDang.findByDanhMuc_Id(danhMucId);
+    }
+
+    @Override
+    public void dangBai(Baidangvanban baiDang, Videobaidang video) {
+        this.baiDang.dangBai(baiDang, video);
     }
     
 }

@@ -23,7 +23,14 @@ const Header = () => {
                 <div id="Login" className="ms-auto">
                     {user ? (
                         <ul className="navbar-nav">
-                            <Link className="btn btn-primary" to="/userinfo">Thông Tin</Link>
+
+                            <li className="nav-item">
+                                <Link className="btn btn-primary" to="/postblog">Đăng Bài</Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link className="btn btn-primary" to="/userinfo">Thông Tin</Link>
+                            </li>
 
                             <li className="nav-item">
                                 <span>Xin Chào {user.name}!</span>
@@ -34,6 +41,9 @@ const Header = () => {
                         <ul className="navbar-nav">
                             <li className="nav-item">
                                 <Link className="btn btn-primary" to="/login">Đăng nhập</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="btn btn-primary" to="/register">Đăng Ký</Link>
                             </li>
                         </ul>
                     )}

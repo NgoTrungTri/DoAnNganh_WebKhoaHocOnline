@@ -60,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         List<User> users = q.getResultList();
         if (users.isEmpty()) {
-            return null; 
+            return null;    
         }
 
         return users.get(0); 
@@ -76,11 +76,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void addOrUpdateUser(User u) {
         Session s = this.sessionFactory.getObject().getCurrentSession();
-        //bammatkhau
-        if (u.getPassword() != null) {
-            String hashedPassword = passEncoder.encode(u.getPassword());
-            u.setPassword(hashedPassword);
-        }
         s.saveOrUpdate(u);
     }
 

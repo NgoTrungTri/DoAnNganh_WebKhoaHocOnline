@@ -47,7 +47,7 @@ const courses = [
   {
     id: 7,
     title: 'Khóa học luyện thi IELTS 11111',
-    description: 'Luyện thi IELTS với giáo viên bản xứ.',
+    description: 'Luyện thi IELTS với giáo viên bản xứ',
     imageUrl: 'https://via.placeholder.com/150',
     price: '2.000.000đ'
   },

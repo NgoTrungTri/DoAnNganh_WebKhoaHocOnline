@@ -5,6 +5,7 @@
 package com.ntt.services;
 
 import com.ntt.pojo.Baidangvanban;
+import com.ntt.pojo.Videobaidang;
 import java.util.List;
 
 /**
@@ -17,4 +18,6 @@ public interface BaiDangServices {
     List<Baidangvanban> findByNgayDuyetIsNotNull();
 
     List<Baidangvanban> findByDanhMuc_Id(int danhMucId);
+    
+    public void dangBai(Baidangvanban baiDang, Videobaidang video);
 }

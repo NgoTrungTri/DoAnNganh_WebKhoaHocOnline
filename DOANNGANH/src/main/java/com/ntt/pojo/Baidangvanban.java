@@ -4,6 +4,7 @@
  */
 package com.ntt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -78,20 +79,26 @@ public class Baidangvanban implements Serializable {
     @Size(max = 65535)
     @Column(name = "noiDungPhanHoi")
     private String noiDungPhanHoi;
+    @JsonIgnore
     @JoinColumn(name = "danhMucId", referencedColumnName = "id")
     @ManyToOne
     private Danhmuc danhMucId;
     @JoinColumn(name = "idNVDuyet", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User idNVDuyet;
     @JoinColumn(name = "idGVDang", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private User idGVDang;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "baiDangVanBanId")
+    @JsonIgnore
     private Set<Videobaidang> videobaidangSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "baiDangVanBanId")
+    @JsonIgnore
     private Set<Thich> thichSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "baiDangVanBanId")
+    @JsonIgnore
     private Set<Binhluan> binhluanSet;
 
     public Baidangvanban() {
@@ -165,26 +172,32 @@ public class Baidangvanban implements Serializable {
         this.noiDungPhanHoi = noiDungPhanHoi;
     }
 
+    @XmlTransient
     public Danhmuc getDanhMucId() {
         return danhMucId;
     }
 
+    @XmlTransient
     public void setDanhMucId(Danhmuc danhMucId) {
         this.danhMucId = danhMucId;
     }
 
+    @XmlTransient
     public User getIdNVDuyet() {
         return idNVDuyet;
     }
 
+    @XmlTransient
     public void setIdNVDuyet(User idNVDuyet) {
         this.idNVDuyet = idNVDuyet;
     }
 
+    @XmlTransient
     public User getIdGVDang() {
         return idGVDang;
     }
 
+    @XmlTransient
     public void setIdGVDang(User idGVDang) {
         this.idGVDang = idGVDang;
     }
@@ -194,6 +207,7 @@ public class Baidangvanban implements Serializable {
         return videobaidangSet;
     }
 
+    @XmlTransient
     public void setVideobaidangSet(Set<Videobaidang> videobaidangSet) {
         this.videobaidangSet = videobaidangSet;
     }
@@ -203,6 +217,7 @@ public class Baidangvanban implements Serializable {
         return thichSet;
     }
 
+    @XmlTransient
     public void setThichSet(Set<Thich> thichSet) {
         this.thichSet = thichSet;
     }
@@ -212,6 +227,7 @@ public class Baidangvanban implements Serializable {
         return binhluanSet;
     }
 
+    @XmlTransient
     public void setBinhluanSet(Set<Binhluan> binhluanSet) {
         this.binhluanSet = binhluanSet;
     }
@@ -240,5 +256,5 @@ public class Baidangvanban implements Serializable {
     public String toString() {
         return "com.ntt.pojo.Baidangvanban[ id=" + id + " ]";
     }
-    
+
 }

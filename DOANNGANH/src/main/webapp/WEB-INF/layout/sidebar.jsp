@@ -167,7 +167,6 @@
                         <div class="dropdown-content">
                             <a href="<c:url value="/doanh-thu"/>">Doanh Thu Theo Tháng</a> 
                             <a href="<c:url value="/doanh-thu-quy"/>">Doanh Thu Theo Quý</a> 
-                            <a href="<c:url value="/"/>">Xem Doanh Thu Khóa Học</a>
                         </div>
                     </div>
                 </c:when>

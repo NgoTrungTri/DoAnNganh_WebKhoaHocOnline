@@ -5,6 +5,7 @@
 package com.ntt.repositories.impl;
 
 import com.ntt.pojo.Baidangvanban;
+import com.ntt.pojo.Videobaidang;
 import com.ntt.repositories.BaiDangRepository;
 import java.util.List;
 import org.hibernate.Session;
@@ -49,5 +50,24 @@ public class BaiDangRepositoryImpl implements BaiDangRepository {
         Query query = session.createQuery(hql);
         query.setParameter("danhMucId", danhMucId);
         return query.list();
+    }
+
+    @Override
+    public void dangBai(Baidangvanban baiDang, Videobaidang video) {
+        // Get the current Hibernate session
+        Session session = sessionFactory.getObject().getCurrentSession();
+
+        try {
+            session.save(baiDang);
+
+            if (video != null) {
+                video.setBaiDangVanBanId(baiDang);  
+                session.save(video);  
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;  
+        }
     }
 }

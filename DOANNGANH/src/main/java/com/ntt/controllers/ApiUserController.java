@@ -5,6 +5,7 @@
 package com.ntt.controllers;
 
 import com.ntt.components.JwtService;
+import com.ntt.pojo.Chucvu;
 import com.ntt.pojo.User;
 import com.ntt.services.UserServices;
 import java.security.Principal;
@@ -21,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,11 +51,23 @@ public class ApiUserController {
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin
     public void create(@RequestParam Map<String, String> params, @RequestPart MultipartFile[] file) {
+        passwordEncoder = new BCryptPasswordEncoder(); // Khởi tạo passwordEncoder
+        String rawPassword = params.get("password");
+        String encodedPassword = passwordEncoder.encode(rawPassword); 
+        System.out.println("Mật khẩu gốc: " + rawPassword);
+        System.out.println("Mật khẩu đã băm: " + encodedPassword); 
+
         String email = params.get("email");
+        String usernameclient = params.get("username");
 
         Optional<User> existingUser = userService.getUserByEmail(email);
         if (existingUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this email already exists.");
+        }
+
+        User userTonTai = userService.getUserByUsername(usernameclient);
+        if (userTonTai != null && userTonTai.getUsername().equals(params.get("username"))) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this username already exists.");
         }
 
         User user = new User();
@@ -71,9 +83,10 @@ public class ApiUserController {
         }
         user.setGioiTinh(params.get("gioiTinh"));
         user.setNgayTao(new Date());
+        user.setChucVuId(new Chucvu(4));
         user.setEmail(email);
         user.setUsername(params.get("username"));
-        user.setPassword(this.passwordEncoder.encode(params.get("password")));
+        user.setPassword(encodedPassword); 
         user.setUserRole("ROLE_HV");
 
         if (file.length > 0) {
@@ -85,10 +98,10 @@ public class ApiUserController {
     @PostMapping("/login/")
     @CrossOrigin
     public ResponseEntity<String> login(@RequestBody User user) {
-        
+
         if (this.userService.authUser(user.getUsername(), user.getPassword()) == true) {
             String token = this.jwtService.generateTokenLogin(user.getUsername());
-            
+
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
 
@@ -115,15 +128,6 @@ public class ApiUserController {
         userData.put("avatar", user.getAvatar());
 
         return ResponseEntity.ok(userData);
-    }
-
-    @GetMapping("/bammatkhau")
-    @CrossOrigin
-    public String XuatPassword() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "admin";  // Mật khẩu gốc
-        String encodedPassword = encoder.encode(rawPassword);  // Mật khẩu đã được băm
-        return encodedPassword;
     }
 
     @GetMapping(path = "/userinfo/", produces = MediaType.APPLICATION_JSON_VALUE)

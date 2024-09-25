@@ -5,6 +5,7 @@
 package com.ntt.repositories;
 
 import com.ntt.pojo.Baidangvanban;
+import com.ntt.pojo.Videobaidang;
 import java.util.List;
 
 /**
@@ -20,4 +21,7 @@ public interface BaiDangRepository {
 
     // Tìm tất cả bài đăng theo danh mục
     List<Baidangvanban> findByDanhMuc_Id(int danhMucId);
+    
+    ////Đăng bài
+    public void dangBai(Baidangvanban baiDang, Videobaidang video);
 }

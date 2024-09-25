@@ -10,7 +10,7 @@ export const endpoints = {
     'login': '/api/login/',
     'current-user': '/api/current-user/',
     'userbyusername': '/api/userinfo/',
-
+    'postBlog': '/api/dangBai/',
     
 
 }   

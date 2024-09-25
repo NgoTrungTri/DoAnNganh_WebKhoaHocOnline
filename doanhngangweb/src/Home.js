@@ -11,8 +11,8 @@ import Register from "./components/User/Register";
 import ClearCookieOnMount from "./components/commons/ClearCookieOnMount";
 import ChatBox from "./components/ChatBox/ChatBox";
 import { Container } from "react-bootstrap";
-import "./style/HomePage.css"
 import HomePage from "./components/HomePage/HomePage";
+import PostBlog from "./components/Blog/PostBlog";
 // import { Container } from "react-bootstrap";
 
 
@@ -30,6 +30,7 @@ const Home = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/postblog" element={<PostBlog />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userinfo" element={<UserDetails />} />
               <Route path="/chat" element={user ? <ChatBox user={user} /> : <Login />} />
