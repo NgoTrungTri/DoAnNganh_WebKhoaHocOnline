@@ -1,0 +1,103 @@
+/* CSS dành cho trang TeacherBlogs */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #343a40;
+    text-align: center;
+}
+
+/* Giới hạn chiều cao của tiêu đề và thêm dấu ba chấm nếu vượt quá */
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff;
+    white-space: nowrap;
+    /* Giới hạn tiêu đề trên một dòng */
+    overflow: hidden;
+    /* Ẩn phần text tràn */
+    text-overflow: ellipsis;
+    /* Thêm dấu ba chấm nếu text quá dài */
+}
+
+/* Cố định chiều cao cho thẻ để đồng nhất */
+.blog-card {
+    height: 410px;
+    /* Cố định chiều cao của thẻ */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.blog-card-1 {
+    height: 340px;
+    /* Cố định chiều cao của thẻ */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Phần hình ảnh đại diện của bài đăng */
+.card-img-top {
+    height: 180px;
+    /* Chiều cao cố định cho ảnh đại diện */
+    object-fit: cover;
+    /* Đảm bảo ảnh luôn vừa khít */
+    border-radius: 5px 5px 0 0;
+}
+
+/* Phần nội dung của thẻ */
+.card-body {
+    flex-grow: 1;
+    /* Đảm bảo phần thân chiếm tối đa không gian có thể */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Căn đều các phần tử trong body */
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Phong cách cho nút xem bài đăng */
+.btn-outline-primary {
+    font-weight: bold;
+    border-radius: 50px;
+    width: 100%;
+    /* Đảm bảo nút bấm full width */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-outline-warning {
+    font-weight: bold;
+    border-radius: 50px;
+    width: 100%;
+    /* Đảm bảo nút bấm full width */
+}
+
+.btn-outline-danger {
+    font-weight: bold;
+    border-radius: 50px;
+    width: 100%;
+    /* Đảm bảo nút bấm full width */
+}
+
+/* Khoảng cách giữa các thẻ bài đăng */
+.card {
+    margin-bottom: 20px;
+}

@@ -29,5 +29,12 @@ public class DanhMucRepositoryImpl implements DanhMucRepository{
     Session session = sessionFactory.getObject().getCurrentSession();
         return session.createQuery("FROM Danhmuc", Danhmuc.class).getResultList();
     }
+
+    @Override
+    public Danhmuc getDanhMucById(int id) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        Danhmuc danhMuc = s.get(Danhmuc.class, id);
+        return danhMuc;
+    }
     
 }

@@ -10,12 +10,36 @@ export const endpoints = {
     'login': '/api/login/',
     'current-user': '/api/current-user/',
     'userbyusername': '/api/userinfo/',
-    'postBlog': '/api/dangBai/',
+    'getUserRole': '/api/useRole/',
+
+    ////Liên quan tới bài đăng
+    'postBlog': '/api/gv/dangBai/',
+    'categories': '/api/danhMuc/',
+    'baidangmoinhat': '/api/bai-dang-moi-nhat/',
+    'baidangngoaingu': 'api/bai-dang-ngoai-ngu/',
+    'baidangtinhoc': 'api/bai-dang-tin-hoc/',
+    'teacherblogs': '/api/bai-dang-chinh-sua',
+    'myblogs': '/api/bai-dang-public-giao-vien',
+    'demo': '/api/demo',
+    'edit': '/api/blogs',
+    'delete': '/api/xoabaidang',
+
+    ////Liên quan tới khóa học
+    'teacherCourse': '/api/khoahoc/giaovien/',
+    'course-detail': 'api/course-detail',
+    'loadkhoahoctinhoc': '/api/khoahoc/tinhoc/',
+    'loadkhoahocngoaingu': '/api/khoahoc/ngoaingu/',
+    'load4khoahocmoinhat': '/api/khoahoc/moi-nhat/',
+    ///mua khoa hoc
+    'muakhoahoc': '/api/muaKhoaHoc',    
+    'taodonhang': '/api/taoDonHang',
+
+    ///Khóa Học Học Viên
+    'khoaHocDangHoc': '/api/khoahocList/dang-hoc',
+    'khoaHocSapToi': '/api/khoahocList/sap-toi',
+    'khoaHocDaMua': '/api/khoahocList/da-mua',
     
-
 }   
-
-console.log(cookie.load('token'));
 
 export const authApi = () => {
     return axios.create({

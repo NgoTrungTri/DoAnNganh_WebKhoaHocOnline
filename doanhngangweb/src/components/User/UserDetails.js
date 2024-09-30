@@ -44,7 +44,7 @@ const UserDetails = () => {
     return (
         <Container className="mt-5 mb-4" style={{paddingTop: 60}}>
             <Card>
-                <Card.Header as="h4">Thông tin học viên</Card.Header>
+                <Card.Header as="h4">Thông tin người dùng</Card.Header>
                 <Card.Body>
                     <Row>
                         <Col md={4} className="text-center">

@@ -24,5 +24,10 @@ public class DanhMucServicesImpl implements DanhMucServices{
     public List<Danhmuc> getAllDanhMuc() {
         return category.getAllDanhMuc();
     }
+
+    @Override
+    public Danhmuc getDanhMucById(int id) {
+        return category.getDanhMucById(id);
+    }
     
 }

@@ -3,7 +3,7 @@ import { Button, Form, Alert } from "react-bootstrap";
 import cookie from "react-cookies";
 import { Navigate, useNavigate } from "react-router-dom";
 import { MyDispatchContext, MyUserContext } from "../../configs/Context";
-import authApi, { endpoints } from "../../configs/APIs"; 
+import authApi, { endpoints } from "../../configs/APIs";
 const Login = () => {
     const fields = [
         {
@@ -37,6 +37,7 @@ const Login = () => {
 
             // Lưu token vào cookie
             const token = loginResponse.data;
+            // console.log(token);
             cookie.save("token", token);
 
             // Sau khi nhận được token, gửi yêu cầu GET đến /api/current-user/ để lấy thông tin người dùng
@@ -51,7 +52,7 @@ const Login = () => {
                         type: "login",
                         payload: userResponse.data
                     });
-                    
+
                     nav("/");
                 } catch (ex) {
                     console.error("Login error:", ex);

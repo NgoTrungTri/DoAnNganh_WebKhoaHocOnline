@@ -45,45 +45,53 @@
                     <h5 class="mt-3 mb-3 text-center" style="font-style: italic; color: blue">${today}</h5>
                     <div class="card-container">
                         <div class="row">
-                            <c:forEach items="${donhangsByDay}" var="donhang">
-                                <div class="col-12">
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <h5 class="card-title">MÃ ĐƠN HÀNG: ${donhang.id}</h5>
-                                            <p class="card-text">
-                                                <strong>Ngày tạo:</strong> <fmt:formatDate value="${donhang.ngayTao}" pattern="dd-MM-yyyy" /> <br>
-                                                <strong>Tổng tiền:</strong> ${donhang.tongTien} VND <br>
-                                                <strong>Thông tin thanh toán:</strong> ${donhang.thongTinThanhToan}
-                                            </p>
+                            <c:choose>
+                                <c:when test="${not empty donhangsByDay}">
+                                    <c:forEach items="${donhangsByDay}" var="donhang">
+                                        <div class="col-12">
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">MÃ ĐƠN HÀNG: ${donhang.id}</h5>
+                                                    <p class="card-text">
+                                                        <strong>Ngày tạo:</strong> <fmt:formatDate value="${donhang.ngayTao}" pattern="dd-MM-yyyy" /> <br>
+                                                        <strong>Tổng tiền:</strong> ${donhang.tongTien} VND <br>
+                                                        <strong>Thông tin thanh toán:</strong> ${donhang.thongTinThanhToan}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </c:forEach>
+                                    <div class="container mt-3">
+                                        <ul class="pagination justify-content-center">
+                                            <!-- Nút Previous, ẩn nếu đang ở trang đầu tiên -->
+                                            <c:if test="${page > 0}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=${page - 1}&activeTab=ngay">Previous</a>
+                                                </li>
+                                            </c:if>
+
+                                            <!-- Hiển thị các số trang -->
+                                            <c:forEach begin="0" end="${totalPagesByDay - 1}" var="i">
+                                                <li class="page-item <c:if test='${i == page}'>active</c:if>'">
+                                                    <a class="page-link" href="?page=${i}&activeTab=ngay">${i + 1}</a>
+                                                </li>
+                                            </c:forEach>
+
+                                            <!-- Nút Next, ẩn nếu đang ở trang cuối cùng -->
+                                            <c:if test="${page < totalPagesByDay - 1}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=${page + 1}&activeTab=ngay">Next</a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
                                     </div>
-                                </div>
-                            </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="text-center text-muted">Chưa có đơn hàng nào trong ngày hôm nay.</p>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
-                        <div class="container mt-3">
-                            <ul class="pagination justify-content-center">
-                                <!-- Nút Previous, ẩn nếu đang ở trang đầu tiên -->
-                                <c:if test="${page > 0}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=${page - 1}&activeTab=ngay">Previous</a>
-                                    </li>
-                                </c:if>
 
-                                <!-- Hiển thị các số trang -->
-                                <c:forEach begin="0" end="${totalPagesByDay - 1}" var="i">
-                                    <li class="page-item <c:if test='${i == page}'>active</c:if>'">
-                                        <a class="page-link" href="?page=${i}&activeTab=ngay">${i + 1}</a>
-                                    </li>
-                                </c:forEach>
-
-                                <!-- Nút Next, ẩn nếu đang ở trang cuối cùng -->
-                                <c:if test="${page < totalPagesByDay - 1}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=${page + 1}&activeTab=ngay">Next</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </div>
                     </div>
                 </div>                 
             </div>
@@ -139,6 +147,7 @@
                                     <a class="page-link" href="?page=${page + 1}&activeTab=thang">Next</a>
                                 </li>
                             </c:if>
+
                         </ul>
                     </div>
                     <!-- End Pagination -->

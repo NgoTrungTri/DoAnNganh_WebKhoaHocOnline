@@ -26,4 +26,9 @@ public interface DonHangRepository {
     public int countDonhangsByCurrentMonth();
     
     public int countDonhangsByKhoaHocName(String tenKhoaHoc);
+    
+    ////Phương thức mua hàng, tạo đơn hàng 
+    public void muaKhoaHoc(Donhang donHang);
+    
+    public boolean isMuaKhoaHoc(int khoaHocId, int userId);
 }

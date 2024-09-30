@@ -155,8 +155,8 @@
             <div class="dropdown">
                 <a href="#">Quản lý Bài Đăng</a>
                 <div class="dropdown-content">
-                    <a href="<c:url value=""/>">Duyệt Bài Đăng</a>
-                    <a href="<c:url value=""/>">Xem Bài Đăng</a>
+                    <a href="<c:url value="/bai-dang-da-duyet"/>">Bài Đăng Public</a>
+                    <a href="<c:url value="/bai-dang-chua-duyet"/>">Bài Đăng Chưa Duyệt</a>
                 </div>
             </div>
 

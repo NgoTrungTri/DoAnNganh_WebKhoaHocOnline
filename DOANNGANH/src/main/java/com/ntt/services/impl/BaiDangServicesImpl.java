@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  * @author DELL
  */
 @Service
-public class BaiDangServicesImpl implements BaiDangServices{
-    
+public class BaiDangServicesImpl implements BaiDangServices {
+
     @Autowired
     private BaiDangRepository baiDang;
 
@@ -41,5 +41,40 @@ public class BaiDangServicesImpl implements BaiDangServices{
     public void dangBai(Baidangvanban baiDang, Videobaidang video) {
         this.baiDang.dangBai(baiDang, video);
     }
-    
+
+    @Override
+    public Baidangvanban findById(int i) {
+        return this.baiDang.findById(i);
+    }
+
+    @Override
+    public void save(Baidangvanban b) {
+        this.baiDang.save(b);
+    }
+
+    @Override
+    public List<Baidangvanban> findByTrangThaiAndUserId(String trangThai, int userId) {
+        return this.baiDang.findByTrangThaiAndUserId(trangThai, userId);
+    }
+
+    @Override
+    public void deleteBaiDang(int i) {
+        this.baiDang.deleteBaiDang(i);
+    }
+
+    @Override
+    public List<Baidangvanban> getAllBaiDang() {
+        return baiDang.getAllBaiDang();
+    }
+
+    @Override
+    public List<Baidangvanban> get5BaiDangGanNhat() {
+        return baiDang.get5BaiDangGanNhat();
+    }
+
+    @Override
+    public List<Baidangvanban> getAllBaiDangDanhMuc(String tenDanhMuc) {
+        return this.baiDang.getAllBaiDangDanhMuc(tenDanhMuc);
+    }
+
 }

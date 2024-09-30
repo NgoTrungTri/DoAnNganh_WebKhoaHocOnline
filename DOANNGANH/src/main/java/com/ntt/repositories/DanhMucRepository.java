@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface DanhMucRepository {
     public List<Danhmuc> getAllDanhMuc();
+    public Danhmuc getDanhMucById(int id);
 }

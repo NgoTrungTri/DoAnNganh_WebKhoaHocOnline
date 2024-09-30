@@ -1,11 +1,14 @@
 package com.ntt.repositories.impl;
 
+import com.ntt.pojo.Donhang;
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Thoigiantrongtuan;
 import com.ntt.repositories.KhoaHocRepository;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -137,4 +140,145 @@ public class KhoaHocRepositoryImpl implements KhoaHocRepository {
 
         return query.getResultList();
     }
+
+    @Override
+    public List<Khoahoc> loadKhoaHocPhanTrang(String tenDanhMuc, int page, int size) {
+        Session session = sessionFactory.getCurrentSession();
+
+        if (page < 0) {
+            page = 0;
+        }
+
+        Query<Khoahoc> query = session.createQuery(
+                "SELECT k FROM Khoahoc k WHERE k.danhMucId.tenDanhMuc = :tenDanhMuc AND k.trangThai = true AND ngayBatDau > :currentDate ORDER BY k.id DESC", Khoahoc.class);
+        query.setParameter("tenDanhMuc", tenDanhMuc);
+        query.setParameter("currentDate", new Date());
+        // Tính toán offset
+        int offset = page * size;
+
+        query.setFirstResult(offset);
+        query.setMaxResults(size);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Khoahoc> load4KhoaHocMoiNhat() {
+        Session session = sessionFactory.getCurrentSession();
+        String hql = "FROM Khoahoc WHERE trangThai = true AND ngayBatDau > :currentDate ORDER BY ngayTao DESC";
+
+        Query query = session.createQuery(hql);
+        query.setParameter("currentDate", new Date());
+        query.setMaxResults(4);
+
+        return query.list();
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocHocVien(int hocVienId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Khoahoc> danhSachKhoaHoc = new ArrayList<>();
+
+        try {
+            // Truy vấn để lấy danh sách đơn hàng cho hocVienId
+            String hqlDonHang = "SELECT d FROM Donhang d WHERE d.userId.id = :hocVienId";
+            Query<Donhang> queryDonHang = session.createQuery(hqlDonHang, Donhang.class);
+            queryDonHang.setParameter("hocVienId", hocVienId);
+
+            // Lấy danh sách đơn hàng
+            List<Donhang> danhSachDonHang = queryDonHang.getResultList();
+
+            // Lấy khóa học từ danh sách đơn hàng
+            for (Donhang donHang : danhSachDonHang) {
+                Khoahoc khoaHoc = donHang.getKhoaHocId();
+                if (khoaHoc != null) {
+                    danhSachKhoaHoc.add(khoaHoc);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý lỗi nếu cần
+        }
+
+        return danhSachKhoaHoc;
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocDangHoc(int hocVienId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Khoahoc> danhSachKhoaHocDangHoc = new ArrayList<>();
+
+        try {
+            // Lấy ngày hiện tại
+            Date currentDate = new Date();
+
+            // Truy vấn để lấy danh sách khóa học đang học
+            String hql = "SELECT kh FROM Khoahoc kh JOIN Donhang d ON kh.id = d.khoaHocId.id "
+                    + "WHERE d.userId.id = :hocVienId AND kh.ngayBatDau <= :currentDate AND kh.ngayKetThuc >= :currentDate";
+            Query<Khoahoc> query = session.createQuery(hql, Khoahoc.class);
+            query.setParameter("hocVienId", hocVienId);
+            query.setParameter("currentDate", currentDate);
+
+            // Lấy danh sách khóa học
+            danhSachKhoaHocDangHoc = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý lỗi nếu cần
+        }
+
+        return danhSachKhoaHocDangHoc;
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocDaMua(int hocVienId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Khoahoc> danhSachKhoaHocDaMua = new ArrayList<>();
+
+        try {
+            // Lấy ngày hiện tại
+            Date currentDate = new Date();
+
+            // Truy vấn để lấy danh sách khóa học đã mua
+            String hql = "SELECT kh FROM Khoahoc kh JOIN Donhang d ON kh.id = d.khoaHocId.id "
+                    + "WHERE d.userId.id = :hocVienId AND kh.ngayKetThuc < :currentDate";
+            Query<Khoahoc> query = session.createQuery(hql, Khoahoc.class);
+            query.setParameter("hocVienId", hocVienId);
+            query.setParameter("currentDate", currentDate);
+
+            // Lấy danh sách khóa học
+            danhSachKhoaHocDaMua = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý lỗi nếu cần
+        }
+
+        return danhSachKhoaHocDaMua;
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocSapToi(int hocVienId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Khoahoc> danhSachKhoaHocSapToi = new ArrayList<>();
+
+        try {
+            // Lấy ngày hiện tại
+            Date currentDate = new Date();
+
+            // Truy vấn để lấy danh sách khóa học sắp tới
+            String hql = "SELECT kh FROM Khoahoc kh JOIN Donhang d ON kh.id = d.khoaHocId.id "
+                    + "WHERE d.userId.id = :hocVienId AND kh.ngayBatDau > :currentDate";
+            Query<Khoahoc> query = session.createQuery(hql, Khoahoc.class);
+            query.setParameter("hocVienId", hocVienId);
+            query.setParameter("currentDate", currentDate);
+
+            // Lấy danh sách khóa học
+            danhSachKhoaHocSapToi = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Xử lý lỗi nếu cần
+        }
+
+        return danhSachKhoaHocSapToi;
+    }
+
 }

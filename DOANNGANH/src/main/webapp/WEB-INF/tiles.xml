@@ -83,6 +83,21 @@
         <put-attribute name="title" value="Doanh Thu Theo Quý" />
         <put-attribute name="content" value="/WEB-INF/pages/doanhThuQuy.jsp" />
     </definition>
+    
+    <definition name="list-baidangchuaduyet" extends="baseLayout">
+        <put-attribute name="title" value="Bài Đăng Chưa Duyệt" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-baidangchuaduyet.jsp" />
+    </definition>
+    
+    <definition name="demo-baidang" extends="baseLayout">
+        <put-attribute name="title" value="Demo Bài Đăng" />
+        <put-attribute name="content" value="/WEB-INF/pages/demo-baidang.jsp" />
+    </definition>
+    
+    <definition name="list-baidangdaduyet" extends="baseLayout">
+        <put-attribute name="title" value="Bài Đăng Đã Duyệt" />
+        <put-attribute name="content" value="/WEB-INF/pages/list-baidangdaduyet.jsp" />
+    </definition>
 
 </tiles-definitions>
 

@@ -1,0 +1,54 @@
+.payment-successful-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Chiều cao tối thiểu của vùng hiển thị */
+    background-color: #f9f9f9; /* Màu nền */
+
+}
+
+.payment-successful-wrapper {
+    text-align: center;
+    background: white; /* Nền trắng cho khung nội dung */
+    padding: 30px;
+    margin-bottom: 200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    max-width: 400px; /* Chiều rộng tối đa */
+    width: 100%; /* Độ rộng chiếm đầy */
+}
+
+.payment-successful-title {
+    font-size: 2rem; /* Kích thước chữ tiêu đề */
+    color: #4CAF50; /* Màu xanh lá cây cho tiêu đề */
+}
+
+.payment-successful-message {
+    font-size: 1.2rem; /* Kích thước chữ cho thông điệp */
+    color: #333; /* Màu chữ */
+}
+
+.payment-successful-detail {
+    margin: 20px 0; /* Đặt khoảng cách cho đoạn văn */
+    font-size: 1rem; /* Kích thước chữ cho chi tiết */
+    color: #666; /* Màu chữ nhạt hơn */
+}
+
+.payment-successful-button-container {
+    margin-top: 20px; /* Khoảng cách phía trên nút */
+}
+
+.payment-successful-button {
+    padding: 10px 20px; /* Khoảng cách cho nút */
+    font-size: 1rem; /* Kích thước chữ cho nút */
+    color: white; /* Màu chữ trắng */
+    background-color: #4CAF50; /* Màu nền xanh lá cây */
+    border: none; /* Không có viền */
+    border-radius: 5px; /* Bo tròn góc */
+    cursor: pointer; /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+.payment-successful-button:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+}

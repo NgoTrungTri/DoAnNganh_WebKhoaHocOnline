@@ -5,6 +5,7 @@
 package com.ntt.services.impl;
 
 import com.ntt.pojo.Donhang;
+import com.ntt.pojo.Khoahoc;
 import com.ntt.repositories.DonHangRepository;
 import com.ntt.services.DonHangServices;
 import java.util.List;
@@ -55,5 +56,16 @@ public class DonHangServicesImpl implements DonHangServices {
     public int countDonhangsByKhoaHocName(String string) {
         return DonHangRepo.countDonhangsByKhoaHocName(string);
     }
+
+    @Override
+    public void muaKhoaHoc(Donhang donHang) {
+        DonHangRepo.muaKhoaHoc(donHang);
+    }
+
+    @Override
+    public boolean isMuaKhoaHoc(int i, int i1) {
+        return DonHangRepo.isMuaKhoaHoc(i, i1);
+    }
+
 
 }

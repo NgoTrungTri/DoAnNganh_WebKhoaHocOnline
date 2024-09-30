@@ -5,6 +5,7 @@
 package com.ntt.repositories.impl;
 
 import com.ntt.pojo.Baidangvanban;
+import com.ntt.pojo.User;
 import com.ntt.pojo.Videobaidang;
 import com.ntt.repositories.BaiDangRepository;
 import java.util.List;
@@ -61,13 +62,72 @@ public class BaiDangRepositoryImpl implements BaiDangRepository {
             session.save(baiDang);
 
             if (video != null) {
-                video.setBaiDangVanBanId(baiDang);  
-                session.save(video);  
+                video.setBaiDangVanBanId(baiDang);
+                session.save(video);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;  
+            throw e;
         }
+    }
+
+    @Override
+    public Baidangvanban findById(int id) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        return session.get(Baidangvanban.class, id);
+    }
+
+    @Override
+    public void save(Baidangvanban baiDang) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        session.saveOrUpdate(baiDang);
+    }
+
+    @Override
+    public List<Baidangvanban> findByTrangThaiAndUserId(String trangThai, int userId) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "FROM Baidangvanban b WHERE b.trangThai = :trangThai AND b.idGVDang.id = :userId";
+        Query<Baidangvanban> query = session.createQuery(hql, Baidangvanban.class);
+        query.setParameter("trangThai", trangThai);
+        query.setParameter("userId", userId);
+        return query.getResultList(); // Sử dụng getResultList() thay vì list()
+    }
+
+    @Override
+    public void deleteBaiDang(int id) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        Baidangvanban baiDang = this.findById(id);
+        if (baiDang != null) {
+            session.delete(baiDang);
+        }
+    }
+
+    @Override
+    public List<Baidangvanban> getAllBaiDang() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "FROM Baidangvanban WHERE trangThai = :status DESC";
+        Query query = session.createQuery(hql);
+        query.setParameter("status", "DA_DUYET");
+        return query.list();
+    }
+
+    @Override
+    public List<Baidangvanban> get5BaiDangGanNhat() {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "FROM Baidangvanban WHERE trangThai = :status ORDER BY ngayDang DESC";
+        Query query = session.createQuery(hql);
+        query.setParameter("status", "DA_DUYET");  
+        query.setMaxResults(5); 
+        return query.list();
+    }
+
+    @Override
+    public List<Baidangvanban> getAllBaiDangDanhMuc(String tenDanhMuc) {
+        Session session = sessionFactory.getObject().getCurrentSession();
+        String hql = "FROM Baidangvanban b WHERE b.danhMucId.tenDanhMuc = :tenDanhMuc";
+        Query query = session.createQuery(hql);
+        query.setParameter("tenDanhMuc", tenDanhMuc);
+        return query.list();
     }
 }

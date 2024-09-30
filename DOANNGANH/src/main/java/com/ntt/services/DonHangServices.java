@@ -26,4 +26,10 @@ public interface DonHangServices {
     public int countDonhangsByCurrentMonth();
 
     public int countDonhangsByKhoaHocName(String tenKhoaHoc);
+
+    public void muaKhoaHoc(Donhang donHang);
+    
+    public boolean isMuaKhoaHoc(int khoaHocId, int userId);
+    
+
 }

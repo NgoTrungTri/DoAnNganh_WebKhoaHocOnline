@@ -56,6 +56,35 @@ public class KhoaHocServicesImpl implements KhoaHocServices {
     public List<Khoahoc> getKhoaHocActiveInQuarter(int i, int i1) {
         return khoaHocRepository.getKhoaHocActiveInQuarter(i, i1);
     }
-    
-    
+
+    @Override
+    public List<Khoahoc> loadKhoaHocPhanTrang(String string, int i, int i1) {
+        return khoaHocRepository.loadKhoaHocPhanTrang(string, i, i1);
+    }
+
+    @Override
+    public List<Khoahoc> load4KhoaHocMoiNhat() {
+        return khoaHocRepository.load4KhoaHocMoiNhat();
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocHocVien(int i) {
+        return khoaHocRepository.getKhoaHocHocVien(i);
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocDangHoc(int i) {
+        return khoaHocRepository.getKhoaHocDangHoc(i);
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocDaMua(int i) {
+        return khoaHocRepository.getKhoaHocDaMua(i);
+    }
+
+    @Override
+    public List<Khoahoc> getKhoaHocSapToi(int i) {
+        return khoaHocRepository.getKhoaHocSapToi(i);
+    }
+       
 }

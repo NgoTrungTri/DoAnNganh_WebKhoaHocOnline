@@ -1,0 +1,71 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.line {
+    max-width: 1320px; /* Set a max width */
+    text-align: center;
+    height: 100px;
+    background-color: #0a58ca;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog-card-1 {
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.btn-outline-primary {
+    font-weight: bold;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Khoảng cách giữa các thẻ bài đăng */
+.card {
+    margin-bottom: 20px;
+}

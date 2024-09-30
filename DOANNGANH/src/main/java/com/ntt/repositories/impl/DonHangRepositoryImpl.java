@@ -133,4 +133,30 @@ public class DonHangRepositoryImpl implements DonHangRepository {
         query.setParameter("tenKhoaHoc", tenKhoaHoc);
         return query.uniqueResult().intValue();
     }
+
+    ////Mua Khóa Học
+    @Override
+    public void muaKhoaHoc(Donhang donHang) {
+        Session session = getCurrentSession();
+        session.save(donHang);
+    }
+
+    @Override
+    public boolean isMuaKhoaHoc(int khoaHocId, int userId) {
+        Session session = getCurrentSession();
+        try {
+            // Sử dụng HQL để tìm kiếm Donhang theo khoaHocId và userId
+            String hql = "FROM Donhang d WHERE d.khoaHocId.id = :khoaHocId AND d.userId.id = :userId";
+            Query<Donhang> query = session.createQuery(hql, Donhang.class);
+            query.setParameter("khoaHocId", khoaHocId);
+            query.setParameter("userId", userId);
+
+            // Kiểm tra xem có tồn tại Donhang nào không
+            return !query.getResultList().isEmpty();
+        } catch (Exception e) {
+            // Xử lý ngoại lệ nếu cần
+            e.printStackTrace();
+            return false; // Có thể trả về false hoặc xử lý theo cách khác
+        }
+    }
 }

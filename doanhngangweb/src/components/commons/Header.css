@@ -1,9 +1,56 @@
-/* Footer.css */
+/* Bóng đổ cho header */
 .shadow-navbar {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Add shadow under the header */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .ft-logo {
     width: 40px;
     height: 40px;
+}
+
+/* Điều chỉnh kích thước chữ và canh lề bên trái */
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: 500;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.navbar-collapse {
+    display: flex; /* Sử dụng flexbox */
+    justify-content: flex-start; /* Mặc định canh lề bên trái */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    width: 100%; /* Đảm bảo chiều rộng chiếm toàn bộ */
+}
+
+/* Thiết lập cho từng mục */
+.navbar-nav .nav-item {
+    margin:0;
+}
+
+.navbar-nav .btn-outline-primary {
+    border: 2px solid #0062cc;
+    color: #0062cc;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 30px;
+}
+
+.navbar-nav .btn-primary {
+    background-color: #0062cc;
+    border-color: #0062cc;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 30px;
+}
+
+.navbar-nav .btn {
+    padding: 8px 20px;
+}
+
+/* Đẩy Login ra bên phải */
+#Login {
+    margin-left: auto; /* Đẩy div Login ra bên phải */
 }

@@ -58,7 +58,6 @@ public class Donhang implements Serializable {
     @Column(name = "tongTien")
     private double tongTien;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "thongTinThanhToan")
     private String thongTinThanhToan;
@@ -122,7 +121,6 @@ public class Donhang implements Serializable {
         return khoaHocId;
     }
 
-    @XmlTransient
     public void setKhoaHocId(Khoahoc khoaHocId) {
         this.khoaHocId = khoaHocId;
     }
@@ -132,7 +130,7 @@ public class Donhang implements Serializable {
         return userId;
     }
 
-    @XmlTransient
+   
     public void setUserId(User userId) {
         this.userId = userId;
     }

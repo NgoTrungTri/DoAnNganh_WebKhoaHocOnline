@@ -4,6 +4,7 @@
  */
 package com.ntt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -46,8 +47,10 @@ public class Danhmuc implements Serializable {
     @Column(name = "tenDanhMuc")
     private String tenDanhMuc;
     @OneToMany(mappedBy = "danhMucId")
+    @JsonIgnore
     private Set<Baidangvanban> baidangvanbanSet;
     @OneToMany(mappedBy = "danhMucId")
+    @JsonIgnore
     private Set<Khoahoc> khoahocSet;
 
     public Danhmuc() {
@@ -83,6 +86,7 @@ public class Danhmuc implements Serializable {
         return baidangvanbanSet;
     }
 
+    @XmlTransient
     public void setBaidangvanbanSet(Set<Baidangvanban> baidangvanbanSet) {
         this.baidangvanbanSet = baidangvanbanSet;
     }
@@ -92,6 +96,7 @@ public class Danhmuc implements Serializable {
         return khoahocSet;
     }
 
+    @XmlTransient
     public void setKhoahocSet(Set<Khoahoc> khoahocSet) {
         this.khoahocSet = khoahocSet;
     }

@@ -30,7 +30,7 @@ public class DonHangController {
             @RequestParam(required = false) String tenKhoaHoc,
             @RequestParam(required = false) String activeTab,
             Model model) {
-        int size = 5;
+        int size = 5;       
 
         // Lấy tổng số đơn hàng theo ngày và tính số trang
         int totalDonhangsByDay = donHangService.countDonhangsByCurrentDay();
@@ -51,6 +51,9 @@ public class DonHangController {
             donhangsByKhoaHoc = donHangService.findDonhangsByKhoaHocName(tenKhoaHoc, page, size);
         }
 
+        if (page < 0) {
+            model.addAttribute("eror", "error");
+        }
         // Truyền dữ liệu vào model để hiển thị trên JSP
         model.addAttribute("donhangsByDay", donhangsByDay);
         model.addAttribute("totalPagesByDay", totalPagesByDay);

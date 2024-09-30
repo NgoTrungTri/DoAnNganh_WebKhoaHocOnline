@@ -126,12 +126,14 @@ public class ApiUserController {
         userData.put("gioiTinh", user.getGioiTinh());
         userData.put("email", user.getEmail());
         userData.put("avatar", user.getAvatar());
-
+        userData.put("userRole", user.getUserRole());
+        
         return ResponseEntity.ok(userData);
     }
 
     @GetMapping(path = "/userinfo/", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
+    
     public ResponseEntity<User> getUserByUsername(@RequestParam String username) {
         User user = userService.getUserByUsername(username);
         if (user != null) {
@@ -139,5 +141,12 @@ public class ApiUserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    
+    @GetMapping("/userRole")
+    @CrossOrigin
+    public String checkUserRole(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        return user.getUserRole();
     }
 }

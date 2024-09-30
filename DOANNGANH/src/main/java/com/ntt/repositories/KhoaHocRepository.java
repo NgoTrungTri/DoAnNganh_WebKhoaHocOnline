@@ -23,10 +23,23 @@ public interface KhoaHocRepository {
     List<Khoahoc> getKhoaHocByDanhMuc(String Danhmuc);
 
     Khoahoc getKhoaHocByBuoiHoc(Thoigiantrongtuan buoiHoc);
-    
-    List<Khoahoc> getKhoaHocByGiaoVien (int giaoVienId); 
-    
+
+    List<Khoahoc> getKhoaHocByGiaoVien(int giaoVienId);
+
     public List<Khoahoc> getKhoaHocActiveInMonth(int thang, int year);
-    
+
     List<Khoahoc> getKhoaHocActiveInQuarter(int quy, int nam);
+
+    public List<Khoahoc> loadKhoaHocPhanTrang(String tenDanhMuc, int page, int size);
+
+    public List<Khoahoc> load4KhoaHocMoiNhat();
+
+    public List<Khoahoc> getKhoaHocHocVien(int hocVienId);
+
+    public List<Khoahoc> getKhoaHocDangHoc(int hocVienId);
+
+    public List<Khoahoc> getKhoaHocDaMua(int hocVienId);
+    
+    public List<Khoahoc> getKhoaHocSapToi(int hocVienId);
+
 }

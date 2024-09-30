@@ -1,6 +1,6 @@
 .banner-container {
   margin-top: -18px;
-  width: 1320px;
+  width: 100%; /* Use 100% for responsive design */
   height: auto;
   overflow: hidden;
 }
@@ -14,7 +14,8 @@
 /* Phần hiển thị khóa học */
 .courses-container {
   margin-top: 50px;
-  width: 1320px;
+  max-width: 1320px; /* Set a max width */
+  margin: 0 auto; /* Center the container */
   text-align: center;
 }
 
@@ -27,13 +28,13 @@
 .courses-grid {
   display: flex;  
   align-items: center;
-  justify-content: space-between; 
-  width: 1320px; 
+  justify-content: center; /* Center the grid */
+  width: 100%; /* Use 100% for responsive design */
   margin: 0 auto; 
 }
 
 .newLine {
-  width: 1320px;
+  max-width: 1320px; /* Set a max width */
   text-align: center;
   height: 100px;
   background-color: #0a58ca;
@@ -41,15 +42,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
-  margin-left: 50px;
-  margin-top: 50px;
+  margin: 50px auto; /* Center the section */
 }
 
 .courses-wrapper {
-  width: 1420px;
-  margin-left: -50px;
-
+  max-width: 1320px; /* Set a max width */
+  margin: 0 auto; /* Center the wrapper */
 }
 
 .course-card {
@@ -57,13 +55,14 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
-  width: 300px; /* Fixed width */
-  height: 450px; /* Fixed height */
+  margin: 5px;
+  width: 300px; /* Fixed width for cards */
+  height: 450px; /* Fixed height for cards */
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Makes sure the content is distributed evenly */
+  justify-content: space-between; /* Ensure content is evenly distributed */
 }
 
 .course-image {
@@ -122,6 +121,6 @@
 }
 
 .prev-button:disabled, .next-button:disabled {
-  background-color: #ccc; /* Màu nền cho nút vô hiệu hóa */
-  cursor: not-allowed; /* Con trỏ chuột vô hiệu hóa */
+  background-color: #ccc; /* Background color for disabled button */
+  cursor: not-allowed; /* Cursor style for disabled button */
 }

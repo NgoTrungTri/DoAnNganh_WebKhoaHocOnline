@@ -20,4 +20,18 @@ public interface BaiDangServices {
     List<Baidangvanban> findByDanhMuc_Id(int danhMucId);
     
     public void dangBai(Baidangvanban baiDang, Videobaidang video);
+    
+    public Baidangvanban findById(int id);
+    
+    public void save(Baidangvanban baiDang);
+    
+    public List<Baidangvanban> findByTrangThaiAndUserId(String trangThai,int userId);
+    
+    public void deleteBaiDang(int id);
+    
+    List<Baidangvanban> getAllBaiDang();
+   
+   List<Baidangvanban> get5BaiDangGanNhat();
+   
+   List<Baidangvanban> getAllBaiDangDanhMuc(String tenDanhMuc);
 }
