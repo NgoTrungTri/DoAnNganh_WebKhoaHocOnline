@@ -21,6 +21,7 @@ import ListCourse from "./components/Course/ListCourse";
 import PaymentSuccessful from "./components/commons/PaymentSuccesful";
 import ClearCookieOnMount from "./components/commons/ClearCookieOnMount";
 import StudentCourse from "./components/Course/StudentCourse";
+import OtpVerify from "./components/User/OtpVerify";
 // import { Container } from "react-bootstrap";
 
 
@@ -40,6 +41,7 @@ const Home = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/postblog" element={<PostBlog />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/otpveryfy" element={<OtpVerify/>} />
               <Route path="/userinfo" element={<UserDetails />} />
               <Route path="/teacherblogs" element={<TeacherBlogs />} />
               <Route path="/listcourse" element={<ListCourse />} />

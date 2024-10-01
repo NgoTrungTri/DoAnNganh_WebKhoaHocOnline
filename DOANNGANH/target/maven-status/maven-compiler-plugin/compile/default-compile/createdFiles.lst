@@ -6,6 +6,7 @@ com\ntt\pojo\Thich_.class
 com\ntt\repositories\DeCuongRepository.class
 com\ntt\pojo\Khoahoc.class
 com\ntt\services\impl\ThoiGianTrongTuanServicesImpl.class
+com\ntt\repositories\EmailRepository.class
 com\ntt\pojo\KhoahocKhuyenmai_.class
 com\ntt\pojo\Khoahoc_.class
 com\ntt\repositories\impl\DanhMucRepositoryImpl.class
@@ -16,6 +17,7 @@ com\ntt\services\impl\BaiDangServicesImpl.class
 com\ntt\controllers\ApiUserController.class
 com\ntt\pojo\Donhang.class
 com\ntt\pojo\UserLoaigiaovien_.class
+com\ntt\repositories\impl\EmailRepositoryImpl.class
 com\ntt\services\UserServices.class
 com\ntt\repositories\impl\VNPayRepositoryImpl.class
 com\ntt\filters\CustomAccessDeniedHandler.class
@@ -53,7 +55,9 @@ com\ntt\configs\TilesConfig.class
 com\ntt\controllers\DonHangController.class
 com\ntt\controllers\ApiKhoaHocController.class
 com\ntt\pojo\DoanhThuQuyForm.class
+com\ntt\services\EmailServices.class
 com\ntt\services\impl\KhoaHocServicesImpl.class
+com\ntt\configs\MailConfig.class
 com\ntt\pojo\BaiDangRequest.class
 com\ntt\pojo\Khuyenmai_.class
 com\ntt\controllers\KhoaHocController.class
@@ -64,6 +68,7 @@ com\ntt\repositories\BaiDangRepository.class
 com\ntt\pojo\Luonggiaovien.class
 com\ntt\pojo\ThoiGianTrongTuanForm.class
 com\ntt\repositories\impl\LuongGiaoVienRepositoryImpl.class
+com\ntt\services\impl\EmailServicesImpl.class
 com\ntt\pojo\Bangluong_.class
 com\ntt\pojo\User_.class
 com\ntt\filters\JwtAuthenticationTokenFilter.class

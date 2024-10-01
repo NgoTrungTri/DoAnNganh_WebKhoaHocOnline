@@ -9,6 +9,7 @@ export const endpoints = {
     'register': '/api/users/',
     'login': '/api/login/',
     'current-user': '/api/current-user/',
+    'verifyOtp': 'api/users/verifyOtp',
     'userbyusername': '/api/userinfo/',
     'getUserRole': '/api/useRole/',
 
