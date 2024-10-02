@@ -89,6 +89,7 @@ const ListCourse = () => {
                 // Theo dõi trạng thái
                 const checkTabStatusInterval = setInterval(async () => {
                     if (tabB && tabB.closed) {
+                        //Ngững theo dõi link
                         clearInterval(checkTabStatusInterval);
                     } else if (tabB) {
                         const currentOrigin = window.location.origin;

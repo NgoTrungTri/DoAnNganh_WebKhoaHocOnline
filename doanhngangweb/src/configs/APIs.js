@@ -8,6 +8,7 @@ export const endpoints = {
     ///Người Dùng
     'register': '/api/users/',
     'login': '/api/login/',
+    'google-signin': 'api/firebase-login/',
     'current-user': '/api/current-user/',
     'verifyOtp': 'api/users/verifyOtp',
     'userbyusername': '/api/userinfo/',

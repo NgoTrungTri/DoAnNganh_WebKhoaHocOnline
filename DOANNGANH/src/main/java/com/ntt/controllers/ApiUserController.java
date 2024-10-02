@@ -33,6 +33,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 
 /**
  *
@@ -54,95 +57,8 @@ public class ApiUserController {
     @Autowired
     private EmailServices emailService;
 
-//    // Biến lưu trữ mã OTP tạm thời (có thể thay bằng cơ sở dữ liệu hoặc cache)
-//    private Map<String, String> otpStorage = new HashMap<>();
-//
-//    @PostMapping(path = "/users/sendOtp", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    @CrossOrigin
-//    public void sendOtp(@RequestBody Map<String, String> params) {
-//        String email = params.get("email");
-//        String username = params.get("username");
-//
-//        // Kiểm tra tồn tại email
-//        Optional<User> existingUser = userService.getUserByEmail(email);
-//        if (existingUser.isPresent()) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this email already exists.");
-//        }
-//
-//        // Kiểm tra tồn tại tên người dùng
-//        User existingUsername = userService.getUserByUsername(username);
-//        if (existingUsername != null) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this username already exists.");
-//        }
-//
-//        // Tạo mã OTP và gửi email
-//        String otp = generateOTP();
-//        otpStorage.put(email, otp); // Lưu mã OTP vào bộ nhớ tạm thời
-//        emailService.sendEmail(email, "Xác nhận đăng ký", "Mã OTP của bạn là: " + otp);
-//        System.out.println("Đã gửi mã OTP tới email: " + email);
-//    }
-//
-//    // Phương thức tạo mã OTP
-//    private String generateOTP() {
-//        Random rand = new Random();
-//        int otp = 100000 + rand.nextInt(900000); // Tạo mã OTP 6 chữ số
-//        return String.valueOf(otp);
-//    }
-//
-//    @PostMapping(path = "/users/verifyOtp", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @CrossOrigin
-//    public void verifyOtp(@RequestBody Map<String, String> params) {
-//        String email = params.get("email");
-//        String otp = params.get("otp");
-//
-//        // Kiểm tra mã OTP
-//        String storedOtp = otpStorage.get(email);
-//        if (storedOtp == null || !storedOtp.equals(otp)) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid OTP.");
-//        }
-//
-//        // Nếu mã OTP hợp lệ, lưu người dùng vào cơ sở dữ liệu
-//        createUser(params); // Gọi phương thức tạo người dùng
-//    }
-//
-//    // Phương thức tạo người dùng
-//    private void createUser(Map<String, String> params) {
-//        String rawPassword = params.get("password");
-//        String encodedPassword = passwordEncoder.encode(rawPassword);
-//        User user = new User();
-//        user.setHo(params.get("ho"));
-//        user.setTen(params.get("ten"));
-//        
-//        // Chuyển đổi ngày sinh
-//        String ngaySinhStr = params.get("ngaySinh");
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        try {
-//            Date ngaySinh = sdf.parse(ngaySinhStr);
-//            user.setNgaySinh(ngaySinh);
-//        } catch (ParseException e) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format for ngaySinh. Please use yyyy-MM-dd.");
-//        }
-//        
-//        // Thiết lập thông tin người dùng
-//        user.setGioiTinh(params.get("gioiTinh"));
-//        user.setNgayTao(new Date());
-//        user.setChucVuId(new Chucvu(4)); // Giả sử ID của chức vụ là 4
-//        user.setEmail(params.get("email"));
-//        user.setUsername(params.get("username"));
-//        user.setPassword(encodedPassword);
-//        user.setUserRole("ROLE_HV");
-//
-//        // Thêm người dùng vào cơ sở dữ liệu
-//        userService.addOrUpdateUser(user);
-//
-//        // Xóa mã OTP sau khi hoàn tất đăng ký
-//        otpStorage.remove(params.get("email"));
-//    }
-    // Biến lưu trữ OTP tạm thời và thông tin người dùng
-    private Map<String, String> otpStorage = new HashMap<>();
-    private Map<String, User> temporaryUserStorage = new HashMap<>();
+    private final Map<String, String> otpStorage = new HashMap<>();
+    private final Map<String, User> temporaryUserStorage = new HashMap<>();
 
     // API tạo người dùng và tạo OTP (form-data)
     @PostMapping(path = "/users/", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -250,6 +166,43 @@ public class ApiUserController {
 
         return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
+
+//    @PostMapping("/firebase-login")
+//    @CrossOrigin
+//    public ResponseEntity<?> loginWithFirebase(@RequestBody String idToken) {
+//        try {
+//            // Xác thực token Firebase
+//            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+//            String email = decodedToken.getEmail();
+//            String uid = decodedToken.getUid();
+//
+//            // Kiểm tra xem user đã tồn tại hay chưa
+//            Optional<User> existingUser = userService.getUserByEmail(email);
+//            if (existingUser.isPresent()) {
+//                throw new ResponseStatusException(HttpStatus.CONFLICT, "Email đã tồn tại trong hệ thống");
+//            }
+//
+//            // Nếu user chưa tồn tại, tạo user mới
+//            User newUser = new User();
+//            newUser.setEmail(email);
+//            newUser.setFirebaseUid(uid);
+//            newUser.setRoles(Collections.singletonList("ROLE_USER")); // Gán role cho user
+//
+//            userService.addOrUpdateUser(newUser);
+//
+//            // Tạo JWT token dựa trên user mới tạo
+//            String token = this.jwtService.generateTokenLogin(user.getUsername());
+//
+//            return ResponseEntity.ok(token);
+//
+//        } catch (FirebaseAuthException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token Firebase không hợp lệ");
+//        } catch (ResponseStatusException e) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getReason());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi hệ thống");
+//        }
+//    }
 
     @GetMapping(path = "/current-user/")
     @CrossOrigin

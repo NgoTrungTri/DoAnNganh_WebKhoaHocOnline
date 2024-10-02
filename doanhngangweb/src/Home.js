@@ -22,7 +22,8 @@ import PaymentSuccessful from "./components/commons/PaymentSuccesful";
 import ClearCookieOnMount from "./components/commons/ClearCookieOnMount";
 import StudentCourse from "./components/Course/StudentCourse";
 import OtpVerify from "./components/User/OtpVerify";
-// import { Container } from "react-bootstrap";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+// import { Container } from "react-bootstrap";\
 
 
 const Home = () => {
@@ -33,28 +34,28 @@ const Home = () => {
     <BrowserRouter>
       <MyUserContext.Provider value={user}>
         <MyDispatchContext.Provider value={useDispatch}>
-        <ClearCookieOnMount />
-          <Header />
-          <Container style={{ marginTop: 100, marginBottom: 100 }}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/postblog" element={<PostBlog />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/otpveryfy" element={<OtpVerify/>} />
-              <Route path="/userinfo" element={<UserDetails />} />
-              <Route path="/teacherblogs" element={<TeacherBlogs />} />
-              <Route path="/listcourse" element={<ListCourse />} />
-              <Route path="/teachercourses" element={<TeacherCourse />} />
-              <Route path="/studentcourses" element={<StudentCourse />} />
-              <Route path="/coursedetail/:courseId" element={<CourseDetail />} />
-              <Route path="/allblogs" element={<PopularBlogs/>} />
-              <Route path="/demo/:id" element={<ViewBlog/>} />
-              <Route path="/paymentsuccess" element={<PaymentSuccessful/>} />
-              <Route path="/chat" element={user ? <ChatBox user={user} /> : <Login />} />
-            </Routes>
-          </Container>
-          <Footer />
+          <ClearCookieOnMount />
+            <Header />
+            <Container style={{ marginTop: 100, marginBottom: 100 }}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/postblog" element={<PostBlog />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/otpveryfy" element={<OtpVerify />} />
+                <Route path="/userinfo" element={<UserDetails />} />
+                <Route path="/teacherblogs" element={<TeacherBlogs />} />
+                <Route path="/listcourse" element={<ListCourse />} />
+                <Route path="/teachercourses" element={<TeacherCourse />} />
+                <Route path="/studentcourses" element={<StudentCourse />} />
+                <Route path="/coursedetail/:courseId" element={<CourseDetail />} />
+                <Route path="/allblogs" element={<PopularBlogs />} />
+                <Route path="/demo/:id" element={<ViewBlog />} />
+                <Route path="/paymentsuccess" element={<PaymentSuccessful />} />
+                <Route path="/chat" element={user ? <ChatBox user={user} /> : <Login />} />
+              </Routes>
+            </Container>
+            <Footer />
         </MyDispatchContext.Provider>
       </MyUserContext.Provider>
     </BrowserRouter>

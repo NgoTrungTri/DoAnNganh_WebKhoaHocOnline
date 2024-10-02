@@ -59,6 +59,7 @@ public class SpringSercurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .usernameParameter("username")
                 .passwordParameter("password")
+                
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .and()
@@ -66,7 +67,7 @@ public class SpringSercurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedPage("/login?accessDenied")
                 .and()
-                .authorizeRequests()
+                .authorizeRequests()    
                 .antMatchers("/").permitAll()
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .and()

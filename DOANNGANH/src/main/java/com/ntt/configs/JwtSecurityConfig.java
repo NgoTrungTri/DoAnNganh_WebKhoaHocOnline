@@ -60,15 +60,17 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/api/**");
 //        http.authorizeRequests().antMatchers("/api/gv/dangBai/").hasAnyRole("GV");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
+        http.authorizeRequests().antMatchers("/api/auth/**").permitAll();
         http.authorizeRequests().antMatchers("/api/users/**").permitAll();
         http.authorizeRequests().antMatchers("/api/bammatkhau").permitAll();
         http.authorizeRequests().antMatchers("/api/totalHour/**").permitAll();
         http.authorizeRequests().antMatchers("/api/quy/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/khoahoc/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/bai-dang-moi-nhat/").permitAll();        
+        http.authorizeRequests().antMatchers("/api/khoahoc/**").permitAll();        
+        http.authorizeRequests().antMatchers("/api/demo/**").permitAll();        
+        http.authorizeRequests().antMatchers("/api/firebase-login/").permitAll();
+        http.authorizeRequests().antMatchers("/api/bai-dang-moi-nhat/").permitAll();
         http.authorizeRequests().antMatchers("/api/bai-dang-tin-hoc/").permitAll();
         http.authorizeRequests().antMatchers("/api/bai-dang-ngoai-ngu/").permitAll();
-
 
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()

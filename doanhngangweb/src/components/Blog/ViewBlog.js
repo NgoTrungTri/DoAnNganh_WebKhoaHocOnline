@@ -1,7 +1,7 @@
 /////Nơi Này hiển thị bài viết khi người dùng click vào xem
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
-import { authApi, endpoints } from '../../configs/APIs';
+import APIs, { authApi, endpoints } from '../../configs/APIs';
 
 const ViewBlog = () => {
     const { id } = useParams();  
@@ -10,8 +10,7 @@ const ViewBlog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const api = authApi();
-                const response = await api.get(`${endpoints['demo']}/${id}`);  
+                const response = await APIs.get(`${endpoints['demo']}/${id}`);  
                 setBlog(response.data);  
             } catch (error) {
                 console.error('Error fetching blog:', error);
