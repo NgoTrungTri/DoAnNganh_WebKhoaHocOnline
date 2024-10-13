@@ -1,28 +1,28 @@
-// Import các hàm cần thiết từ SDK Firebase
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore"; // Đảm bảo import đúng hàm getFirestore
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+  // Import các hàm cần thiết từ SDK Firebase
+  import { initializeApp } from "firebase/app";
+  import { getDatabase } from "firebase/database";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAhGsjp5RTMi2YKz__jJi9zkZRUHzxGcUA",
-  authDomain: "drlweb-284cf.firebaseapp.com",
-  databaseURL: "https://drlweb-284cf-default-rtdb.firebaseio.com",
-  projectId: "drlweb-284cf",
-  storageBucket: "drlweb-284cf.appspot.com",
-  messagingSenderId: "967948141715",
-  appId: "1:967948141715:web:061166dae05ab4e87d3966",
-  measurementId: "G-EB7DCN6VBD"
-};
+  // Cấu hình Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyC9bEmtczSh6Dr1GiKJUqfrG4E4mW-fkGU",
+    authDomain: "doannganh-d5551.firebaseapp.com",
+    projectId: "doannganh-d5551",
+    storageBucket: "doannganh-d5551.appspot.com",
+    messagingSenderId: "85037057535",
+    appId: "1:85037057535:web:2c43f868bc98c1cf7cd3ca",
+    measurementId: "G-MJ95L5CTD6"
+  };
 
-// Khởi tạo Firebase
-const app = initializeApp(firebaseConfig);
+  // Khởi tạo Firebase
+  const app = initializeApp(firebaseConfig);
 
-// Khởi tạo Firestore
-const db = getFirestore(app);
+  // Khởi tạo Realtime Database và Authentication
+  const db = getDatabase(app);
+  const auth = getAuth(app);
 
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+  // Cấu hình Google Auth Provider
+  const provider = new GoogleAuthProvider();
 
-export { auth, provider, signInWithPopup, signOut };
-
-export { db };
+  // Xuất khẩu các đối tượng và hàm cần thiết
+  export { auth, provider, signInWithPopup, signOut, db };

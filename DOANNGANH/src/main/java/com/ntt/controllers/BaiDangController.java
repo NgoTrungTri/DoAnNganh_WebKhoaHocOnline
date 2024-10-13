@@ -18,11 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -33,8 +35,8 @@ public class BaiDangController {
 
     @Autowired
     private BaiDangServices baiDangService;
-    
-    @Autowired 
+
+    @Autowired
     private UserServices userService;
 
     // Hiển thị danh sách các bài đăng chưa được duyệt
@@ -89,11 +91,11 @@ public class BaiDangController {
     public ResponseEntity<String> capNhatGopY(@PathVariable("id") int id,
             @RequestBody Map<String, Object> requestData, Model model,
             Principal principal) {
-        
+
         ///Lấy User đăng nhập hiện tại
         String username = principal.getName();
         User user = userService.getUserByUsername(username);
-        
+
         ////Truyền vào Model
         List<Baidangvanban> baiDangChuaDuyet = baiDangService.findByTrangThai("CHUA_DUYET");
         model.addAttribute("baiDangList", baiDangChuaDuyet);
@@ -110,5 +112,12 @@ public class BaiDangController {
             return ResponseEntity.ok("Đã Góp Ý Cho Giáo Viên Đăng Bài");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Không tìm thấy bài đăng");
+    }
+
+    @DeleteMapping("/xoabaidang/{baiDangId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CrossOrigin
+    public void deleteHoatDong(Model model, @PathVariable(value = "baiDangId") int id) {
+        this.baiDangService.deleteBaiDang(id);
     }
 }

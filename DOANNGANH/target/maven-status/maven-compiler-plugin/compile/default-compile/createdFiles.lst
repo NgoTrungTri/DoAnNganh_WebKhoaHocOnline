@@ -28,12 +28,14 @@ com\ntt\formatter\UserFormatter.class
 com\ntt\configs\HibernateConfig.class
 com\ntt\pojo\Khuyenmai.class
 com\ntt\services\impl\LuongGiaoVienServicesImpl.class
+com\ntt\repositories\UidFirebaseRepository.class
 com\ntt\controllers\DoanhThuController.class
 com\ntt\repositories\UserRepository.class
 com\ntt\services\impl\UserServicesImpl.class
 com\ntt\components\JwtService.class
 com\ntt\pojo\Baidangvanban.class
 com\ntt\services\impl\DanhMucServicesImpl.class
+com\ntt\pojo\UidFirebase_.class
 com\ntt\repositories\impl\DeCuongRepositoryImpl.class
 com\ntt\pojo\Otp_.class
 com\ntt\pojo\Baidangvanban_.class
@@ -57,6 +59,7 @@ com\ntt\controllers\ApiKhoaHocController.class
 com\ntt\pojo\DoanhThuQuyForm.class
 com\ntt\services\EmailServices.class
 com\ntt\services\impl\KhoaHocServicesImpl.class
+com\ntt\pojo\UidFirebase.class
 com\ntt\configs\MailConfig.class
 com\ntt\pojo\BaiDangRequest.class
 com\ntt\pojo\Khuyenmai_.class
@@ -66,6 +69,7 @@ com\ntt\controllers\ApiDonHangController.class
 com\ntt\services\DanhMucServices.class
 com\ntt\repositories\BaiDangRepository.class
 com\ntt\pojo\Luonggiaovien.class
+com\ntt\controllers\ApiThoiGianTrongTuan.class
 com\ntt\pojo\ThoiGianTrongTuanForm.class
 com\ntt\repositories\impl\LuongGiaoVienRepositoryImpl.class
 com\ntt\services\impl\EmailServicesImpl.class
@@ -80,6 +84,7 @@ com\ntt\pojo\Thoigiantrongtuan.class
 com\ntt\repositories\KhoaHocRepository.class
 com\ntt\repositories\ThoiGianTrongTuanRepository.class
 com\ntt\pojo\Luonggiaovien_.class
+com\ntt\services\impl\UidFirebaseServicesImpl.class
 com\ntt\services\ThoiGianTrongTuanServices.class
 com\ntt\pojo\Videobaidang.class
 com\ntt\repositories\DanhMucRepository.class
@@ -93,6 +98,7 @@ com\ntt\services\impl\VNPayServicesImpl.class
 com\ntt\configs\SecurityWebApplicationInitializer.class
 com\ntt\pojo\Donhang_.class
 com\ntt\services\ChucVuServices.class
+com\ntt\services\UidFirebaseServices.class
 com\ntt\repositories\DonHangRepository.class
 com\ntt\controllers\DeCuongController.class
 com\ntt\configs\WebAppContextConfig.class
@@ -114,6 +120,8 @@ com\ntt\services\impl\NgayHocBuServicesImpl.class
 com\ntt\services\VNPayServices.class
 com\ntt\pojo\KhoahocDecuong_.class
 com\ntt\services\BaiDangServices.class
+com\ntt\repositories\impl\UidFirebaseRepositoryImpl.class
+com\ntt\pojo\ThoiKhoaBieuResponseDTO.class
 com\ntt\pojo\Ngayhocbu_.class
 com\ntt\configs\SpringSercurityConfig.class
 com\ntt\pojo\Thoigiantrongtuan_.class

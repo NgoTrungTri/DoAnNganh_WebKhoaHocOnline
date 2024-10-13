@@ -1,0 +1,67 @@
+/* ListStudent.css */
+
+/* Định dạng container chính */
+.list-student-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tiêu đề của danh sách */
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Danh sách học viên */
+.student-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Mỗi mục học viên */
+.student-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s;
+}
+
+/* Hiệu ứng khi hover lên mục học viên */
+.student-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng thông tin học viên */
+.student-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Text khi đang tải dữ liệu */
+.loading-text {
+    font-size: 18px;
+    color: #007bff;
+    text-align: center;
+}
+
+/* Text khi có lỗi */
+.error-text {
+    font-size: 18px;
+    color: #dc3545;
+    text-align: center;
+}
+
+/* Text khi không có dữ liệu */
+.no-data-text {
+    font-size: 18px;
+    color: #ffc107;
+    text-align: center;
+}

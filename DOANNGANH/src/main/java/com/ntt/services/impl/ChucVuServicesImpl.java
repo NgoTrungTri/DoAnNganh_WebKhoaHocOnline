@@ -25,5 +25,10 @@ public class ChucVuServicesImpl implements ChucVuServices{
     public List<Chucvu> getAllChucVu() {
         return chucVuRepo.getAllChucVu();
     }
+
+    @Override
+    public Chucvu getChucVuByName(String name) {
+        return chucVuRepo.getChucVuByName(name);
+    }
     
 }

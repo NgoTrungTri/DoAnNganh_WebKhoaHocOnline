@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,7 +81,7 @@ public class ApiKhoaHocController {
     public List<Khoahoc> loadKhoaHocTinHoc(@RequestParam(defaultValue = "0") int page) {
         // Kiểm tra xem page có nhỏ hơn 0 không
         if (page < 0) {
-            page = 0; 
+            page = 0;
         }
 
         List<Khoahoc> khoaHocList = this.khoahocService.loadKhoaHocPhanTrang("Tin Học", page, 4);
@@ -98,7 +99,7 @@ public class ApiKhoaHocController {
         List<Khoahoc> khoaHocList = this.khoahocService.loadKhoaHocPhanTrang("Ngoại Ngữ", page, 4);
         return khoaHocList;
     }
-    
+
     ////APi hiện 4 khóa học mới nhất
     @CrossOrigin
     @GetMapping("/khoahoc/moi-nhat")
@@ -106,7 +107,7 @@ public class ApiKhoaHocController {
         List<Khoahoc> khoaHocList = this.khoahocService.load4KhoaHocMoiNhat();
         return khoaHocList;
     }
-    
+
     /// API hiện ra các khóa học đang học của học viên
     @GetMapping("/khoahocList/dang-hoc")
     @CrossOrigin
@@ -134,7 +135,7 @@ public class ApiKhoaHocController {
 
         return ResponseEntity.ok(khoaHocDaMuaList); // Trả về danh sách khóa học đã mua
     }
-    
+
     @GetMapping("/khoahocList/sap-toi")
     @CrossOrigin
     public ResponseEntity<List<Khoahoc>> getKhoaHocSapToi(Principal principal) {
@@ -147,5 +148,18 @@ public class ApiKhoaHocController {
 
         return ResponseEntity.ok(khoaHocSapToiList); // Trả về danh sách khóa học đã mua
     }
-    
+
+    @GetMapping("/danhsachhocvien/{khoaHocId}")
+    @CrossOrigin
+    public ResponseEntity<List<User>> getDanhSachHocVien(@PathVariable("khoaHocId") int khoaHocId) {
+        // Lấy danh sách học viên đã mua khóa học theo khoaHocId
+        List<User> danhSachHocVien = this.khoahocService.getAllUserByLopHoc(khoaHocId);
+
+        if (danhSachHocVien.isEmpty()) {
+            return ResponseEntity.noContent().build(); 
+        }
+
+        return ResponseEntity.ok(danhSachHocVien);
+    }
+
 }

@@ -8,7 +8,8 @@ export const endpoints = {
     ///Người Dùng
     'register': '/api/users/',
     'login': '/api/login/',
-    'google-signin': 'api/firebase-login/',
+    'google-firebaseuser': '/api/firebase-register',
+    'google-createtoken': '/api/firebase-login',
     'current-user': '/api/current-user/',
     'verifyOtp': 'api/users/verifyOtp',
     'userbyusername': '/api/userinfo/',
@@ -32,6 +33,8 @@ export const endpoints = {
     'loadkhoahoctinhoc': '/api/khoahoc/tinhoc/',
     'loadkhoahocngoaingu': '/api/khoahoc/ngoaingu/',
     'load4khoahocmoinhat': '/api/khoahoc/moi-nhat/',
+    'liststudent': '/api/danhsachhocvien',
+    
     ///mua khoa hoc
     'muakhoahoc': '/api/muaKhoaHoc',    
     'taodonhang': '/api/taoDonHang',
@@ -40,6 +43,11 @@ export const endpoints = {
     'khoaHocDangHoc': '/api/khoahocList/dang-hoc',
     'khoaHocSapToi': '/api/khoahocList/sap-toi',
     'khoaHocDaMua': '/api/khoahocList/da-mua',
+
+    ///Thời Khóa Biểu
+    'thoiKhoaBieu': '/api/tkb-hocvien/',
+    'lichGiangDay': 'api/tkb-giaovien/',
+
     
 }   
 

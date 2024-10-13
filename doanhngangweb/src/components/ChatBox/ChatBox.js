@@ -1,51 +1,56 @@
 import { useEffect, useState } from "react";
-import { addDoc, collection, onSnapshot, serverTimestamp, where, query, getDocs, setDoc, doc } from "firebase/firestore";
-import { db } from "../../configs/Firebase";
+import { getDatabase, ref, onValue, set, get, push } from "firebase/database";
 import { authApi, endpoints } from "../../configs/APIs";
 
 const ChatBox = ({ user }) => {
     const [messages, setMessages] = useState([]);
-    const [text, setText] = useState("");// Tin nhắn
-    const [recipient, setRecipient] = useState({});/// Người nhận tin nhắn
+    const [text, setText] = useState(""); // Tin nhắn
+    const [recipient, setRecipient] = useState({}); // Người nhận tin nhắn
     const [users, setUsers] = useState([]);
     const [userDetails, setUserDetails] = useState({});
     const [conversationId, setConversationId] = useState(null);
-    const [searchText, setSearchText] = useState("");/// Tìm kiếm người dùng
+    const [searchText, setSearchText] = useState(""); // Tìm kiếm người dùng
+
+    const db = getDatabase();
 
     useEffect(() => {
         if (!user) return;
-        /// Fetch những cuộc trò chuyện của user đăng nhập
+
+        // Fetch những cuộc trò chuyện của user đăng nhập
         const fetchConversations = async () => {
             try {
-                const conversationsRef = collection(db, "conversations");
-                const q = query(conversationsRef, where("users", "array-contains", user.username));
-                const querySnapshot = await getDocs(q);
-                ///Tạo Set để lưu trữ danh sách các user chat với người dùng hiện tại
+                const conversationsRef = ref(db, "conversations");
+                const snapshot = await get(conversationsRef);
+                const conversations = snapshot.val();
                 let userList = new Set();
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    data.users.forEach((username) => {
-                        if (username !== user.username) {
-                            userList.add(username);
-                        }
-                    });
-                });
+
+                // Duyệt qua các cuộc trò chuyện để tìm người dùng
+                for (const key in conversations) {
+                    const data = conversations[key];
+                    if (data.users.includes(user.username)) {
+                        data.users.forEach((username) => {
+                            if (username !== user.username) {
+                                userList.add(username);
+                            }
+                        });
+                    }
+                }
 
                 const usersArray = Array.from(userList);
                 setUsers(usersArray);
 
-                // Fetch thông tin các user chat lưu vào UserDetails với người dùng hiện tại để hiện avatar...
+                // Fetch thông tin các user chat
                 const authAPI = authApi();
                 const userDetailsResponse = await Promise.all(
-                    usersArray.map(username => authAPI.get(`${endpoints.userbyusername}?username=${username}`))/// sử dụng arrow function cho nhanh
+                    usersArray.map(username => authAPI.get(`${endpoints.userbyusername}?username=${username}`))
                 );
-                /// Biến đổi respone của APi thành dối tượng
-                const userDetailsObject = userDetailsResponse.reduce((acc, curr) => { 
+
+                // Biến đổi respone của APi thành dối tượng
+                const userDetailsObject = userDetailsResponse.reduce((acc, curr) => {
                     acc[curr.data.username] = curr.data;
                     return acc;
                 }, {});
                 setUserDetails(userDetailsObject);
-                // console.log(userDetailsObject);
             } catch (error) {
                 console.error("Không thể lấy người dùng chat với bạn ", error);
             }
@@ -54,32 +59,31 @@ const ChatBox = ({ user }) => {
         fetchConversations();
     }, [user]);
 
-
-    ///Lấy ConversationsId
+    // Lấy ConversationsId
     useEffect(() => {
         if (!user || !recipient.username) return;
 
         const fetchConversation = async () => {
             try {
-                const conversationsRef = collection(db, "conversations");
-                const q = query(conversationsRef, where("users", "array-contains", user.username));
-                const querySnapshot = await getDocs(q);
-                ///Tạo biến 
+                const conversationsRef = ref(db, "conversations");
+                const snapshot = await get(conversationsRef);
+                const conversations = snapshot.val();
                 let foundConversation = null;
 
-                ////Duyệt tìm cuộc trò truyện nào có thông tin của người nhận và lưu id cuộc trò chuyện
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
+                // Duyệt tìm cuộc trò chuyện nào có thông tin của người nhận
+                for (const key in conversations) {
+                    const data = conversations[key];
                     if (data.users.includes(recipient.username)) {
-                        foundConversation = { id: doc.id, ...data };
+                        foundConversation = { id: key, ...data };
+                        break; // Dừng vòng lặp khi tìm thấy
                     }
-                });
+                }
 
-                ///Nếu chưa có thì tạo  
+                // Nếu chưa có thì tạo
                 if (!foundConversation) {
-                    const newConversationRef = doc(conversationsRef);
-                    await setDoc(newConversationRef, { users: [user.username, recipient.username] });
-                    setConversationId(newConversationRef.id);
+                    const newConversationRef = ref(db, `conversations/${Date.now()}`); // Sử dụng timestamp làm ID
+                    await set(newConversationRef, { users: [user.username, recipient.username] });
+                    setConversationId(newConversationRef.key);
                 } else {
                     setConversationId(foundConversation.id);
                 }
@@ -91,37 +95,36 @@ const ChatBox = ({ user }) => {
         fetchConversation();
     }, [user, recipient]);
 
-    ///Fetch dữ liệu của cuộc trò chuyện -- dựa trên id của cuộc trò chuyện bởi hàm fetchConversation(); và ConversationId
+    // Fetch dữ liệu của cuộc trò chuyện dựa trên id của cuộc trò chuyện
     useEffect(() => {
         if (!conversationId) return;
 
-        const messagesRef = collection(db, "messages");
-        const q = query(messagesRef, where("conversationId", "==", conversationId));
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const messagesRef = ref(db, `messages/${conversationId}`);
+        const unsubscribe = onValue(messagesRef, (snapshot) => {
             const data = [];
-            snapshot.forEach((doc) => {
-                data.push({ id: doc.id, ...doc.data() });
+            snapshot.forEach((childSnapshot) => {
+                const message = childSnapshot.val();
+                data.push({ id: childSnapshot.key, ...message });
             });
             const sortedData = data.sort((a, b) => a.timestamp - b.timestamp);
             setMessages(sortedData);
-            // setMessages(data);
         });
 
-        return () => unsubscribe(); /// húy listener
+        return () => unsubscribe(); // Hủy listener
     }, [conversationId]);
 
-    ///Hàm gửi tin nhắn
+    // Hàm gửi tin nhắn
     const sendMessage = async () => {
         if (!user || !conversationId) {
             console.error("Lỗi không có người dùng hoặc cuộc trò chuyện nào!!");
             return;
         }
         try {
-            await addDoc(collection(db, "messages"), {
+            const messagesRef = ref(db, `messages/${conversationId}`);
+            await push(messagesRef, {
                 username: user.username,
                 mess: text,
-                conversationId,
-                timestamp: serverTimestamp(),
+                timestamp: Date.now(), // Sử dụng thời gian hiện tại làm timestamp
             });
             setText("");
         } catch (error) {
@@ -131,12 +134,13 @@ const ChatBox = ({ user }) => {
 
     const formatTime = (timestamp) => {
         if (timestamp) {
-            const date = timestamp.toDate();
+            // Nếu timestamp là một số (milliseconds)
+            const date = new Date(timestamp); // Tạo đối tượng Date từ milliseconds
             const hours = date.getHours().toString().padStart(2, '0');
             const minutes = date.getMinutes().toString().padStart(2, '0');
-            return `${hours}:${minutes}`;
+            return `${hours}:${minutes}`; // Trả về định dạng HH:mm
         }
-        return "";
+        return ""; // Trả về chuỗi rỗng nếu không có timestamp hợp lệ
     };
 
     const handleKeyPress = (e) => {
@@ -173,7 +177,7 @@ const ChatBox = ({ user }) => {
                     ...prevDetails,
                     [response.data.username]: response.data
                 }));
-                
+
                 setSearchText("");
             } else {
                 alert("Không tồn tại người dùng này!");
@@ -218,9 +222,9 @@ const ChatBox = ({ user }) => {
                                                 />
                                                 <span className="input-group-text border-0" id="search-addon" onClick={handleSearch}>
                                                     <i className="fas fa-search">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                                    </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                                        </svg>
                                                     </i>
                                                 </span>
                                             </div>
@@ -288,10 +292,11 @@ const ChatBox = ({ user }) => {
                                                 value={text}
                                                 onKeyDown={handleKeyPress}
                                                 onChange={(e) => setText(e.target.value)}
+                                                style={{ fontSize: '0.9rem' }} // Thay đổi kích thước chữ ở đây
                                             />
-                                            <a className="ms-1 text-muted" href="#!"><i className="fas fa-paperclip"></i></a>
-                                            <a className="ms-3 text-muted" href="#!"><i className="fas fa-smile"></i></a>
-                                            <a className="ms-3" href="#!" onClick={sendMessage}><i className="fas fa-paper-plane"></i>SEND</a>
+                                            <a className="ms-1 text-muted" href="#!" style={{ fontSize: '0.9rem' }}><i className="fas fa-paperclip"></i></a>
+                                            <a className="ms-3 text-muted" href="#!" style={{ fontSize: '0.9rem' }}><i className="fas fa-smile"></i></a>
+                                            <a className="ms-3" href="#!" onClick={sendMessage} style={{ fontSize: '0.9rem' }}><i className="fas fa-paper-plane"></i> Gửi</a>
                                         </div>
                                     </div>
                                 </div>
@@ -305,4 +310,3 @@ const ChatBox = ({ user }) => {
 };
 
 export default ChatBox;
-

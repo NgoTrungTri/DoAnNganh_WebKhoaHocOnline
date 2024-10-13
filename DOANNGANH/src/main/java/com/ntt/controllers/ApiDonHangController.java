@@ -8,6 +8,7 @@ import com.ntt.pojo.Donhang;
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.User;
 import com.ntt.services.DonHangServices;
+import com.ntt.services.EmailServices;
 import com.ntt.services.KhoaHocServices;
 import com.ntt.services.UserServices;
 import com.ntt.services.VNPayServices;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,7 +45,10 @@ public class ApiDonHangController {
 
     @Autowired
     private VNPayServices VNPay;
-    
+
+    @Autowired
+    private EmailServices emailService;
+
     ////Tạo Url Thanh Toán VNpay
     @CrossOrigin
     @PostMapping("/muaKhoaHoc/{khoaHocId}")
@@ -119,6 +122,15 @@ public class ApiDonHangController {
 
         // Lưu đơn hàng vào cơ sở dữ liệu
         this.donHangService.muaKhoaHoc(dh);
+
+        emailService.sendEmail(
+                user.getEmail(),
+                "Thông Báo Mua Khóa Học",
+                "Chào bạn,\n\n"
+                + "Bạn đã mua thành công khóa học " + khoaHoc.getTenKhoaHoc() + "\n\n"
+                + "Bạn hãy theo dõi lịch học trong thời khóa biểu của bạn. \n\n"
+                + "Xin cảm ơn."
+        );
 
         // Trả về thông báo đơn giản
         return ResponseEntity.ok("Đơn hàng đã được tạo thành công");

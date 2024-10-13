@@ -103,4 +103,10 @@ public class UserRepositoryImpl implements UserRepository {
             return Optional.empty();
         }
     }
+
+    @Override
+    public void createUidFirebaseUser(User u) {
+        Session s = this.sessionFactory.getObject().getCurrentSession();
+        s.saveOrUpdate(u);
+    }
 }

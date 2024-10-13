@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface ChucVuServices {
     public List<Chucvu> getAllChucVu();
+    public Chucvu getChucVuByName(String name);
 }

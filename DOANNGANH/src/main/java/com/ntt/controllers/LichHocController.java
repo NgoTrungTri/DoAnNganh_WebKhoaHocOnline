@@ -8,9 +8,12 @@ import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Ngayhocbu;
 import com.ntt.pojo.ThoiGianTrongTuanForm;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.User;
+import com.ntt.services.EmailServices;
 import com.ntt.services.KhoaHocServices;
 import com.ntt.services.NgayHocBuServices;
 import com.ntt.services.ThoiGianTrongTuanServices;
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -25,7 +28,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +45,9 @@ public class LichHocController {
 
     @Autowired
     private NgayHocBuServices ngayHocBuService;
+
+    @Autowired
+    private EmailServices emailService;
 
     // Phương thức để thêm thông tin chung vào model
     private void populateScheduleModel(Model model, int courseId) {
@@ -207,6 +212,23 @@ public class LichHocController {
 
             ngayHocBuService.TaoNgayHocBu(ngayhocbu);
             model.addAttribute("khoaHocId", kh.getId());
+
+            List<User> userList = this.khoahocService.getAllUserByLopHoc(kh.getId());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String ngayHocBuFormatted = dateFormat.format(ngayhocbu.getNgayHocBu());
+
+            for (User u : userList) {
+                emailService.sendEmail(
+                        u.getEmail(),
+                        "Thông Báo Học Bù",
+                        "Chào bạn,\n\n"
+                        + "Môn học " + kh.getTenKhoaHoc() + " của bạn đã bị nghỉ vì lý do của giáo viên.\n\n"
+                        + "Ngày nghỉ là ngày: " + ngayhocbu.getNgayBu() + ".\n\n"
+                        + "Bạn sẽ học bù vào ngày: " + ngayHocBuFormatted + ".\n\n"
+                        + "Xin cảm ơn."
+                );
+            }
+
             return "redirect:/list-ngayhocbu/" + kh.getId();
         } else {
             model.addAttribute("errorMessage", "Trùng Lịch Dạy Của Giảng Viên. Vui lòng chọn ngày khác.");
@@ -256,6 +278,5 @@ public class LichHocController {
             buoiHoc.setThoiLuong(minutes > 0 ? hours + 1 : hours);
         }
     }
-    
-    
+
 }

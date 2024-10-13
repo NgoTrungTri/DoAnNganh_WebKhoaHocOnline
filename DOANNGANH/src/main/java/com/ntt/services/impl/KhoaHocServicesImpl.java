@@ -2,6 +2,7 @@ package com.ntt.services.impl;
 
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.User;
 import com.ntt.repositories.KhoaHocRepository;
 import com.ntt.services.KhoaHocServices;
 import java.util.Date;
@@ -85,6 +86,11 @@ public class KhoaHocServicesImpl implements KhoaHocServices {
     @Override
     public List<Khoahoc> getKhoaHocSapToi(int i) {
         return khoaHocRepository.getKhoaHocSapToi(i);
+    }
+
+    @Override
+    public List<User> getAllUserByLopHoc(int lopHocId) {
+        return khoaHocRepository.getAllUserByLopHoc(lopHocId);
     }
        
 }

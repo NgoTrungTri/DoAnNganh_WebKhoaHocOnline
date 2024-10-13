@@ -3,6 +3,7 @@ package com.ntt.repositories.impl;
 import com.ntt.pojo.Donhang;
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.User;
 import com.ntt.repositories.KhoaHocRepository;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -279,6 +280,19 @@ public class KhoaHocRepositoryImpl implements KhoaHocRepository {
         }
 
         return danhSachKhoaHocSapToi;
+    }
+
+    @Override
+    public List<User> getAllUserByLopHoc(int lopHocId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        String hql = "SELECT DISTINCT d.userId FROM Donhang d WHERE d.khoaHocId.id = :khoaHocId";
+
+        Query<User> query = session.createQuery(hql, User.class);
+        query.setParameter("khoaHocId", lopHocId);
+
+        // Trả về danh sách user đã mua khóa học
+        return query.getResultList();
     }
 
 }

@@ -43,6 +43,9 @@ const Header = () => {
                                             <li className="nav-item">
                                                 <Link className="nav-link" to="/teachercourses">Khóa Học Phụ Trách</Link>
                                             </li>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to="/teacherschedule">Lịch Giảng Dạy</Link>
+                                            </li>
                                         </>
                                     ) : (
                                         <>
@@ -54,6 +57,9 @@ const Header = () => {
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link" to="/studentcourses">Khóa Học Của Bạn</Link>
+                                            </li>
+                                            <li className="nav-item">
+                                                <Link className="nav-link" to="/studentschedule">Thời Khóa Biểu</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link" to="/allblogs">Bài Đăng Kiến Thức</Link>
@@ -77,6 +83,9 @@ const Header = () => {
                 <div id="Login" className="loginthe d-flex align-items-center">
                     {user ? (
                         <ul className="navbar-nav">
+                            <li className="nav-item d-flex align-items-center">
+                                <Link className="btn btn-outline-primary ms-3" to="/chat">Tin Nhắn</Link>
+                            </li>
                             <li className="nav-item d-flex align-items-center">
                                 <Link className="btn btn-outline-primary ms-3" onClick={() => dispatch({ type: "logout" })}>Đăng xuất</Link>
                             </li>

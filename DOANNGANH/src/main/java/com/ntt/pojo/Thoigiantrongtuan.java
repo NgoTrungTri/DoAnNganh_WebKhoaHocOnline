@@ -75,7 +75,7 @@ public class Thoigiantrongtuan implements Serializable {
 
     @Column(name = "thoiLuong")
     private double thoiLuong;
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "khoaHocId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Khoahoc khoaHocId;
@@ -143,7 +143,7 @@ public class Thoigiantrongtuan implements Serializable {
         return ngayHoc;
     }
 
-    @XmlTransient
+//    @XmlTransient
     public Khoahoc getKhoaHocId() {
         return khoaHocId;
     }

@@ -4,14 +4,13 @@
  */
 package com.ntt.repositories;
 
-import com.ntt.pojo.Chucvu;
-import java.util.List;
+import com.ntt.pojo.UidFirebase;
 
 /**
  *
  * @author DELL
  */
-public interface ChucVuRepository {
-    public List<Chucvu> getAllChucVu();
-    public Chucvu getChucVuByName(String name);
+public interface UidFirebaseRepository {
+    public void create(UidFirebase uidFirebase);
+    public boolean existsUidFirebase(int userId);
 }

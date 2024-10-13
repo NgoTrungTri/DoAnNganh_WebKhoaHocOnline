@@ -26,7 +26,7 @@ h1 {
 
 /* Cố định chiều cao cho thẻ để đồng nhất */
 .blog-card {
-    height: 410px;
+    height: 450px;
     /* Cố định chiều cao của thẻ */
     display: flex;
     flex-direction: column;

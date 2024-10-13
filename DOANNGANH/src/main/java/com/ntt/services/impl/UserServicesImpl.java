@@ -10,6 +10,7 @@ import com.ntt.pojo.User;
 import com.ntt.repositories.UserRepository;
 import com.ntt.services.UserServices;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +69,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void addOrUpdateUser(User u) {
         System.out.println("User file: " + u.getFile());
-        if (!u.getFile().isEmpty()) {
+        if (u.getFile() != null && u.getFile().getSize() > 0) {
             try {
                 Map res = this.cloudinary.uploader().upload(u.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
@@ -76,7 +77,7 @@ public class UserServicesImpl implements UserServices {
                 Logger.getLogger(UserServicesImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        u.setNgayTao(new Date());        
+        u.setNgayTao(new Date());
         this.userRepo.addOrUpdateUser(u);
     }
 
@@ -94,6 +95,10 @@ public class UserServicesImpl implements UserServices {
     public List<User> getUsersByUserRole(String userRole) {
         return this.userRepo.getUsersByUserRole(userRole);
     }
-    
-    
+
+    @Override
+    public void createUidFirebaseUser(User user) {
+        this.userRepo.createUidFirebaseUser(user);
+    }
+
 }

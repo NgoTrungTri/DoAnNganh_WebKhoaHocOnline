@@ -4,6 +4,8 @@
  */
 package com.ntt.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.ntt.components.JwtService;
 import com.ntt.pojo.Chucvu;
 import com.ntt.pojo.User;
@@ -36,6 +38,15 @@ import org.springframework.web.server.ResponseStatusException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.ntt.pojo.UidFirebase;
+import com.ntt.services.ChucVuServices;
+import com.ntt.services.UidFirebaseServices;
+import com.ntt.services.impl.UserServicesImpl;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,8 +68,14 @@ public class ApiUserController {
     @Autowired
     private EmailServices emailService;
 
-    private final Map<String, String> otpStorage = new HashMap<>();
-    private final Map<String, User> temporaryUserStorage = new HashMap<>();
+    @Autowired
+    private UidFirebaseServices uidFirebaseService;
+
+    @Autowired
+    private Cloudinary cloudinary;
+
+    private Map<String, String> otpStorage = new HashMap<>();
+    private Map<String, User> temporaryUserStorage = new HashMap<>();
 
     // API tạo người dùng và tạo OTP (form-data)
     @PostMapping(path = "/users/", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -98,17 +115,23 @@ public class ApiUserController {
         }
         user.setGioiTinh(params.get("gioiTinh"));
         user.setNgayTao(new Date());
-        user.setChucVuId(new Chucvu(4)); // Giả sử ID chức vụ là 4
+        user.setChucVuId(new Chucvu(4));
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(encodedPassword);
         user.setUserRole("ROLE_HV");
 
-        // Lưu file nếu có
-        if (file.length > 0) {
-            user.setFile(file[0]);
+        if (file.length > 0 && !file[0].isEmpty()) {
+            try {
+                // Upload tệp lên Cloudinary và lấy URL
+                Map<String, Object> res = this.cloudinary.uploader().upload(file[0].getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                user.setAvatar(res.get("secure_url").toString()); // Cập nhật avatar với URL
+            } catch (IOException ex) {
+                Logger.getLogger(UserServicesImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            user.setAvatar("Lỗi nên không có"); // Đảm bảo avatar là null nếu không có tệp
         }
-
         // Tạo mã OTP ngẫu nhiên
         String otp = generateOtp();
         otpStorage.put(email, otp);
@@ -147,7 +170,7 @@ public class ApiUserController {
         }
 
         // Lưu người dùng vào cơ sở dữ liệu
-        userService.addOrUpdateUser(user);
+        userService.createUidFirebaseUser(user);
 
         // Xóa OTP và thông tin người dùng khỏi bộ nhớ tạm sau khi hoàn tất đăng ký
         otpStorage.remove(email);
@@ -167,42 +190,93 @@ public class ApiUserController {
         return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
 
-//    @PostMapping("/firebase-login")
-//    @CrossOrigin
-//    public ResponseEntity<?> loginWithFirebase(@RequestBody String idToken) {
-//        try {
-//            // Xác thực token Firebase
-//            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-//            String email = decodedToken.getEmail();
-//            String uid = decodedToken.getUid();
-//
-//            // Kiểm tra xem user đã tồn tại hay chưa
-//            Optional<User> existingUser = userService.getUserByEmail(email);
-//            if (existingUser.isPresent()) {
-//                throw new ResponseStatusException(HttpStatus.CONFLICT, "Email đã tồn tại trong hệ thống");
-//            }
-//
-//            // Nếu user chưa tồn tại, tạo user mới
-//            User newUser = new User();
-//            newUser.setEmail(email);
-//            newUser.setFirebaseUid(uid);
-//            newUser.setRoles(Collections.singletonList("ROLE_USER")); // Gán role cho user
-//
-//            userService.addOrUpdateUser(newUser);
-//
-//            // Tạo JWT token dựa trên user mới tạo
-//            String token = this.jwtService.generateTokenLogin(user.getUsername());
-//
-//            return ResponseEntity.ok(token);
-//
-//        } catch (FirebaseAuthException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token Firebase không hợp lệ");
-//        } catch (ResponseStatusException e) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getReason());
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi hệ thống");
-//        }
-//    }
+    ///Hàm tạo user khi lần đầu đăng nhập bằng google
+    @PostMapping("/firebase-register")
+    @CrossOrigin
+    public ResponseEntity<?> registerWithFirebase(
+            @RequestParam Map<String, String> request) {
+        try {
+            String idToken = request.get("token");
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String email = decodedToken.getEmail();
+            String uid = decodedToken.getUid();
+            String name = decodedToken.getName();
+            String firstName = name.substring(0, name.lastIndexOf(" "));
+            String lastName = name.substring(name.lastIndexOf(" ") + 1);
+            String avatar = decodedToken.getPicture();
+
+            Optional<User> existingUser = userService.getUserByEmail(email);
+            if (existingUser.isPresent()) {
+                User user = existingUser.get(); // Lấy đối tượng User từ Optional
+
+                // Kiểm tra xem UID Firebase có tồn tại cho user này không
+                if (this.uidFirebaseService.existsUidFirebase(user.getId())) {
+                    // UID Firebase đã tồn tại cho user này
+                    return ResponseEntity.status(HttpStatus.OK).body("User đã tồn tại và có UID Firebase.");
+                } else {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email đã tồn tại trong hệ thống");
+                }
+            }
+
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setHo(firstName);
+            newUser.setTen(lastName);
+            newUser.setUsername(email);
+            newUser.setPassword(generateRandomPassword());
+            newUser.setUserRole("ROLE_HV");
+            newUser.setAvatar(avatar);
+            newUser.setNgayTao(new Date());
+            newUser.setChucVuId(new Chucvu(4));
+
+            ////Thêm User vào DB
+            userService.createUidFirebaseUser(newUser);
+
+            // Sau khi tạo user, lưu Firebase UID vào bảng UID_Firebase 
+            UidFirebase uidFirebase = new UidFirebase();
+            uidFirebase.setFirebaseUid(uid);
+            uidFirebase.setUserId(newUser.getId());
+
+            uidFirebaseService.create(uidFirebase);
+
+            return ResponseEntity.ok("User đã được tạo thành công");
+
+        } catch (FirebaseAuthException e) {
+            e.printStackTrace(); // Log chi tiết lỗi
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token Firebase không hợp lệ: " + e.getMessage());
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getReason());
+        }
+    }
+
+    @PostMapping("/firebase-login")
+    @CrossOrigin
+    public ResponseEntity<?> loginWithFirebase(@RequestParam Map<String, String> request) {
+        try {
+            String idToken = request.get("token");
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            String email = decodedToken.getEmail();
+
+            Optional<User> existingUser = userService.getUserByEmail(email);
+            String token = null;
+            if (existingUser.isPresent()) {
+                // Sinh token cho người dùng
+                token = jwtService.generateTokenLogin(existingUser.get().getUsername());
+            }
+
+            return ResponseEntity.ok(token);
+
+        } catch (FirebaseAuthException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token Firebase không hợp lệ");
+        }
+    }
+
+    public String generateRandomPassword() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16]; // Tạo mật khẩu 16 ký tự
+        random.nextBytes(bytes);
+        return Base64.getEncoder().encodeToString(bytes);
+    }
 
     @GetMapping(path = "/current-user/")
     @CrossOrigin

@@ -22,7 +22,9 @@ import PaymentSuccessful from "./components/commons/PaymentSuccesful";
 import ClearCookieOnMount from "./components/commons/ClearCookieOnMount";
 import StudentCourse from "./components/Course/StudentCourse";
 import OtpVerify from "./components/User/OtpVerify";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import StudentSchedule from "./components/Schedule/StudentSchedule";
+import TeacherSchedule from "./components/Schedule/TeacherSchedule";
+import ListStudent from "./components/Course/ListStudent";
 // import { Container } from "react-bootstrap";\
 
 
@@ -34,7 +36,7 @@ const Home = () => {
     <BrowserRouter>
       <MyUserContext.Provider value={user}>
         <MyDispatchContext.Provider value={useDispatch}>
-          <ClearCookieOnMount />
+          {/* <ClearCookieOnMount /> */}
             <Header />
             <Container style={{ marginTop: 100, marginBottom: 100 }}>
               <Routes>
@@ -49,9 +51,12 @@ const Home = () => {
                 <Route path="/teachercourses" element={<TeacherCourse />} />
                 <Route path="/studentcourses" element={<StudentCourse />} />
                 <Route path="/coursedetail/:courseId" element={<CourseDetail />} />
+                <Route path="/liststudent/:courseId" element={<ListStudent />} />
                 <Route path="/allblogs" element={<PopularBlogs />} />
                 <Route path="/demo/:id" element={<ViewBlog />} />
                 <Route path="/paymentsuccess" element={<PaymentSuccessful />} />
+                <Route path="/studentschedule" element={<StudentSchedule />} />
+                <Route path="/teacherschedule" element={<TeacherSchedule />} />
                 <Route path="/chat" element={user ? <ChatBox user={user} /> : <Login />} />
               </Routes>
             </Container>

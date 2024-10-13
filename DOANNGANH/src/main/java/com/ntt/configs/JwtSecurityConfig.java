@@ -65,9 +65,11 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/api/bammatkhau").permitAll();
         http.authorizeRequests().antMatchers("/api/totalHour/**").permitAll();
         http.authorizeRequests().antMatchers("/api/quy/**").permitAll();
-        http.authorizeRequests().antMatchers("/api/khoahoc/**").permitAll();        
-        http.authorizeRequests().antMatchers("/api/demo/**").permitAll();        
-        http.authorizeRequests().antMatchers("/api/firebase-login/").permitAll();
+        http.authorizeRequests().antMatchers("/api/khoahoc/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/demo/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/bang-luong/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/firebase-login").permitAll();
+        http.authorizeRequests().antMatchers("/api/firebase-register").permitAll();
         http.authorizeRequests().antMatchers("/api/bai-dang-moi-nhat/").permitAll();
         http.authorizeRequests().antMatchers("/api/bai-dang-tin-hoc/").permitAll();
         http.authorizeRequests().antMatchers("/api/bai-dang-ngoai-ngu/").permitAll();

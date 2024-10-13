@@ -6,6 +6,7 @@ package com.ntt.services;
 
 import com.ntt.pojo.Khoahoc;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.User;
 import java.util.List;
 
 /**
@@ -41,4 +42,6 @@ public interface KhoaHocServices {
     public List<Khoahoc> getKhoaHocDaMua(int hocVienId);
     
     public List<Khoahoc> getKhoaHocSapToi(int hocVienId);
+    
+    public List<User> getAllUserByLopHoc(int lopHocId);
 }

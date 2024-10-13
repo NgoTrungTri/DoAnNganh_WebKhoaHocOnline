@@ -7,6 +7,7 @@ package com.ntt.repositories;
 import com.ntt.pojo.Khoahoc;
 import java.util.List;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.User;
 
 /**
  *
@@ -41,5 +42,8 @@ public interface KhoaHocRepository {
     public List<Khoahoc> getKhoaHocDaMua(int hocVienId);
     
     public List<Khoahoc> getKhoaHocSapToi(int hocVienId);
+    
+    ////Lấy ra những học viên học kháo học đó
+    public List<User> getAllUserByLopHoc(int lopHocId);
 
 }

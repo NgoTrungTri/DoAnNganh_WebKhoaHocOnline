@@ -136,6 +136,7 @@ const Register = () => {
                 nav("/otpveryfy", { state: { email: user.email } });
             }
         } catch (ex) {
+            alert("Lỗi Khi đăng ký: " + ex);
             console.error(ex);
         }
     };

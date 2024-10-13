@@ -8,17 +8,27 @@ import com.ntt.pojo.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
 /**
  *
  * @author DELL
  */
-public interface UserServices extends UserDetailsService{
+public interface UserServices extends UserDetailsService {
+
     User getUserById(int id);
+
     User getUserByUsername(String username);
+
     Optional<User> getUserByEmail(String email);
+
     List<User> getUser();
+
     void addOrUpdateUser(User u);
+
     boolean authUser(String username, String password);
+
     List<User> getUsersByUserRole(String userRole);
+
+    public void createUidFirebaseUser(User u);
     
 }

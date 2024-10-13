@@ -24,7 +24,22 @@
 
                     <!-- Nút bấm xem demo mở bài đăng trên web -->
                     <a href="${pageContext.request.contextPath}/demo/${baiDang.id}" 
-                       class="btn btn-primary" target="_blank">Xem Demo</a>                  
+                       class="btn btn-success" target="_blank">Xem Demo</a>  
+                    <!-- Nút xóa bài viết với alert xác nhận -->
+                    <!-- Nút xóa bài viết với phương thức DELETE và alert xác nhận -->
+                    <a href="#" class="btn btn-danger"
+                       onclick="if (confirm('Bạn có chắc chắn muốn xóa bài viết này không?')) {
+                                   fetch('${pageContext.request.contextPath}/xoabaidang/${baiDang.id}', {
+                                                   method: 'DELETE'
+                                               }).then(response => {
+                                                   if (response.ok) {
+                                                       alert('Xóa thành công');
+                                                       window.location.reload();
+                                                   } else {
+                                                       alert('Xóa thất bại');
+                                                   }
+                                               });
+                                           }">Xóa bài viết</a>
                 </div>
             </div>
         </div>

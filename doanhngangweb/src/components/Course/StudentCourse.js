@@ -47,83 +47,100 @@ const StudentCourse = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30}}>Các Khóa Học Bạn Đang Học</h1>
+            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Bạn Đang Học</h1>
             <div className="row">
-                {coursesDangHoc.map((course) => (
-                    <div className="col-md-4" key={course.id}>
-                        <div className="card blog-card mb-4 shadow-sm">
-                            <img
-                                src={getRandomImage()} // Thay thế hình ảnh nếu cần
-                                className="card-img-top"
-                                alt="Course thumbnail"
-                            />
-                            <div className="card-body">
-                                <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
-                                <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>
-                                <button
-                                    className="btn btn-outline-primary w-100"
-                                    onClick={() => {
-                                        navigate(`/coursedetail/${course.id}`);
-                                    }}
-                                >
-                                    Xem Khóa Học
-                                </button>
+                {coursesDangHoc.length > 0 ? (
+                    coursesDangHoc.map((course) => (
+                        <div className="col-md-4" key={course.id}>
+                            <div className="card blog-card mb-4 shadow-sm">
+                                <img
+                                    src={getRandomImage()} // Thay thế hình ảnh nếu cần
+                                    className="card-img-top"
+                                    alt="Course thumbnail"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
+                                    <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>
+                                    <button
+                                        className="btn btn-outline-primary w-100"
+                                        onClick={() => {
+                                            navigate(`/coursedetail/${course.id}`);
+                                        }}
+                                    >
+                                        Xem Khóa Học
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="col-12 text-center">
+                        <p className="text-muted">Bạn chưa có khóa học nào.</p>
                     </div>
-                ))}
+                )}
             </div>
 
             {/* Các khóa học sắp tới */}
             <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Bạn Sắp Tới</h1>
             <div className="row">
-                {coursesSapToi.map((course) => (
-                    <div className="col-md-4" key={course.id}>
-                        <div className="card blog-card mb-4 shadow-sm">
-                            <img
-                                src={getRandomImage()} // Thay thế hình ảnh nếu cần
-                                className="card-img-top"
-                                alt="Course thumbnail"
-                            />
-                            <div className="card-body">
-                                <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
-                                <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>
-                                <button
-                                    className="btn btn-outline-primary w-100"                                   
-                                >
-                                    Khóa Học Đang Chuẩn Bị Mở
-                                </button>
+                {coursesSapToi.length > 0 ? (
+                    coursesSapToi.map((course) => (
+                        <div className="col-md-4" key={course.id}>
+                            <div className="card blog-card mb-4 shadow-sm">
+                                <img
+                                    src={getRandomImage()} // Thay thế hình ảnh nếu cần
+                                    className="card-img-top"
+                                    alt="Course thumbnail"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
+                                    <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>
+                                    <button
+                                        className="btn btn-outline-primary w-100"
+                                    >
+                                        Khóa Học Đang Chuẩn Bị Mở
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="col-12 text-center">
+                        <p className="text-muted">Bạn chưa có khóa học nào sắp tới.</p>
                     </div>
-                ))}
+                )}
             </div>
 
-
-            {/* ///Các Khóa Học đã mua */}
-            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Đã Mua</h1>
+            {/* Các Khóa Học đã mua */}
+            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Đã Học</h1>
             <div className="row">
-                {coursesDaMua.map((course) => (
-                    <div className="col-md-4" key={course.id}>
-                        <div className="card blog-card mb-4 shadow-sm">
-                            <img
-                                src={getRandomImage()} // Thay thế hình ảnh nếu cần
-                                className="card-img-top"
-                                alt="Course thumbnail"
-                            />
-                            <div className="card-body">
-                                <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
-                                <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
-                                <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>                           
+                {coursesDaMua.length > 0 ? (
+                    coursesDaMua.map((course) => (
+                        <div className="col-md-4" key={course.id}>
+                            <div className="card blog-card mb-4 shadow-sm">
+                                <img
+                                    src={getRandomImage()} // Thay thế hình ảnh nếu cần
+                                    className="card-img-top"
+                                    alt="Course thumbnail"
+                                />
+                                <div className="card-body">
+                                    <h5 className="card-title text-primary">{course.tenKhoaHoc}</h5>
+                                    <p className="card-text text-muted">{`Ngày bắt đầu: ${new Date(course.ngayBatDau).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Ngày kết thúc: ${new Date(course.ngayKetThuc).toLocaleDateString('vi-VN')}`}</p>
+                                    <p className="card-text text-muted">{`Giá: ${course.giaTien.toLocaleString()} VNĐ`}</p>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="col-12 text-center">
+                        <p className="text-muted">Bạn chưa mua khóa học nào.</p>
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );
@@ -134,6 +151,5 @@ const getRandomImage = () => {
     const randomIndex = Math.floor(Math.random() * 8) + 1;
     return `/images/course-thumbnails/image${randomIndex}.jpg`;
 };
-
 
 export default StudentCourse;

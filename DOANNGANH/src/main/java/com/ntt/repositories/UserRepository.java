@@ -13,12 +13,22 @@ import java.util.Optional;
  * @author DELL
  */
 public interface UserRepository {
+
     User getUserById(int id);
+
     User getUserByUsername(String username);
+
     Optional<User> getUserByEmail(String email);
+
     boolean authUser(String username, String password);
+
     List<User> getUser();
+
     void addOrUpdateUser(User u);
+
     List<User> getUsersByUserRole(String userRole);
     
+    ///Tạo User khi đăng nhập bằng google
+    void createUidFirebaseUser(User u);
+
 }
