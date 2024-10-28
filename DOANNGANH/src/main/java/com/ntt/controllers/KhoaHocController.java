@@ -72,7 +72,7 @@ public class KhoaHocController {
         course.setIdNVTao(currentUser);
 
         khoahocService.createCourse(course);
-        return "redirect:/list-courses";
+        return "redirect:/view-list-course";
     }
 
 }
