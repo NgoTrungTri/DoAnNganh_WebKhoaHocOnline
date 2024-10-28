@@ -6,6 +6,7 @@ package com.ntt.repositories.impl;
 
 import com.ntt.pojo.Luonggiaovien;
 import com.ntt.pojo.Thoigiantrongtuan;
+import com.ntt.pojo.UserLoaigiaovien;
 import com.ntt.repositories.LuongGiaoVienRepository;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -109,7 +110,7 @@ public class LuongGiaoVienRepositoryImpl implements LuongGiaoVienRepository {
     @Override
     public void update(Luonggiaovien lngvn) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(lngvn);
+        session.saveOrUpdate(lngvn);
     }
 
     @Override
@@ -138,4 +139,9 @@ public class LuongGiaoVienRepositoryImpl implements LuongGiaoVienRepository {
         return (int) totalHour;
     }
 
+    @Override
+    public void createLoaiGiaoVien(UserLoaigiaovien loaiGV) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(loaiGV);
+    }
 }

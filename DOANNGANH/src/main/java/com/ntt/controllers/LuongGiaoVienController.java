@@ -27,7 +27,9 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.layout.element.Text;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import com.ntt.pojo.Loaigiaovien;
 import com.ntt.pojo.User;
+import com.ntt.pojo.UserLoaigiaovien;
 import com.ntt.services.UserServices;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -50,6 +52,8 @@ public class LuongGiaoVienController {
 
     @GetMapping("/hesoluong")
     public String listHeSo(Model model, @RequestParam(name = "LoaiGV", required = false) String loaiGV) {
+        List<User> listGiaoVien = userServices.getUsersByUserRole("ROLE_GV");
+        model.addAttribute("listGiaoVien", listGiaoVien);
         List<Luonggiaovien> heSo = null;
 
         // Nếu không có lựa chọn cụ thể, mặc định là "Cơ Hữu"
@@ -70,8 +74,36 @@ public class LuongGiaoVienController {
         }
 
         model.addAttribute("heSo", heSo);
-        model.addAttribute("LoaiGV", loaiGV);  // Truyền giá trị loại giáo viên để sử dụng trong JSP
+        model.addAttribute("LoaiGV", loaiGV);
         return "list-hesoluonggiaovien";
+    }
+
+    @PostMapping("/createLuongGiaoVien")
+    public String createLuongGiaoVien(@RequestParam("userId") int userId,
+            @RequestParam("heSo") float heSo,
+            @RequestParam("tienLuongThemTheoGio") double tienLuongThemTheoGio) {
+        User u = userServices.getUserById(userId);
+        // Tạo một đối tượng Luonggiaovien mới
+        Luonggiaovien luongGiaoVien = new Luonggiaovien();
+        
+        luongGiaoVien.setHeSo(heSo);
+        luongGiaoVien.setTienLuongThemTheoGio(tienLuongThemTheoGio);
+        luongGiaoVien.setUserId(u);
+
+        luong.update(luongGiaoVien);
+        
+        UserLoaigiaovien loaiGV = new UserLoaigiaovien();
+        loaiGV.setUserId(u);
+        if (heSo <= 0) {
+            loaiGV.setLoaiGiaoVienId(new Loaigiaovien(2));
+        }
+        else {
+            loaiGV.setLoaiGiaoVienId(new Loaigiaovien(1));
+        }
+        
+        this.luong.createLoaiGiaoVien(loaiGV);
+        // Redirect về trang danh sách hệ số lương
+        return "redirect:/hesoluong";
     }
 
     @PostMapping("/updateLuongGiaoVien")

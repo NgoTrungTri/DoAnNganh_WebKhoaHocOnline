@@ -4,10 +4,10 @@
  */
 package com.ntt.controllers;
 
-
 import com.ntt.pojo.User;
 import com.ntt.services.ChucVuServices;
 import com.ntt.services.UserServices;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +36,11 @@ public class UserController {
     }
 
     @GetMapping("/")
+    public String home() {
+        return "home";
+    }
+
+    @GetMapping("/userpage")
     public String index(Model model, @RequestParam(name = "userRole", required = false) String userRole) {
         List<User> users;
         if (userRole != null) {
@@ -54,10 +59,24 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public String addUser(@ModelAttribute(value = "user") User u, Model model) {
-        try {          
-            this.userService.addOrUpdateUser(u);
-            return "redirect:/";
+    public String addUser(@ModelAttribute(value = "user") User u, Model model, Principal p) {
+        try {
+            String username = p.getName();
+            User user = userService.getUserByUsername(username);
+
+            if (u.getUserRole().equals("ROLE_ADMIN")) {
+                if (user.getUserRole().equals("ROLE_ADMIN")) {
+                    this.userService.addOrUpdateUser(u);
+                    return "redirect:/userpage";
+                } else {
+                    model.addAttribute("errorMessage", "Don't have permittion");
+                    return "add-user";
+                }
+            } else {
+                this.userService.addOrUpdateUser(u);
+                return "redirect:/userpage";
+            }
+
         } catch (Exception ex) {
             model.addAttribute("errorMessage", "Error occurred while adding/updating user: " + ex.getMessage());
             return "add-user";
@@ -71,6 +90,6 @@ public class UserController {
             model.addAttribute("user", user);
             return "add-user";
         }
-        return "redirect:/";
+        return "redirect:/userpage";
     }
 }

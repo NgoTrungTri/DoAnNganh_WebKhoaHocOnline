@@ -117,13 +117,14 @@
                 <div class="dropdown-content">
                     <c:choose>
                         <c:when test="${pageContext.request.userPrincipal.name == 'admin'}">
-                            <a href="<c:url value="/?userRole=ROLE_NV"/>">Nhân Viên</a>
-                            <a href="<c:url value="/?userRole=ROLE_GV"/>">Giáo Viên</a>
-                            <a href="<c:url value="/?userRole=ROLE_HV"/>">Học Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_NV"/>">Nhân Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_GV"/>">Giáo Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_HV"/>">Học Viên</a>
                         </c:when>
                         <c:otherwise>
-                            <a href="<c:url value="/?userRole=ROLE_GV"/>">Giáo Viên</a>
-                            <a href="<c:url value="/?userRole=ROLE_HV"/>">Học Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_NV"/>">Nhân Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_GV"/>">Giáo Viên</a>
+                            <a href="<c:url value="/userpage/?userRole=ROLE_HV"/>">Học Viên</a>
                         </c:otherwise>
                     </c:choose>
                 </div>

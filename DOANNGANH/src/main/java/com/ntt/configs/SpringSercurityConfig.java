@@ -11,6 +11,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,8 +23,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -54,27 +60,68 @@ public class SpringSercurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.formLogin()
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/login?error")
+//                .and()
+//                .logout().logoutSuccessUrl("/")
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/login?accessDenied")
+//                .and()
+//                .authorizeRequests()    
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/css/**", "/js/**").permitAll()
+//                .and()
+//                .csrf().disable();
+//    }
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?error")
-                .and()
-                .logout().logoutSuccessUrl("/")
-                .and()
-                .exceptionHandling().accessDeniedPage("/login?accessDenied")
-                .and()
-                .authorizeRequests()    
-                .antMatchers("/").permitAll()
-                .antMatchers("/css/**", "/js/**").permitAll()
-                .and()
-                .csrf().disable();
-
-    }
-
+protected void configure(HttpSecurity http) throws Exception {
+    http.formLogin()
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .defaultSuccessUrl("/")
+            .failureUrl("/login?error")
+            .and()
+            .logout().logoutSuccessUrl("/")
+            .and()
+            .exceptionHandling().accessDeniedPage("/login?accessDenied")
+            .and()
+            .authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/css/**", "/js/**").permitAll()
+            .and()
+            .csrf().disable()
+            .formLogin().permitAll()
+            .successHandler(new AuthenticationSuccessHandler() {
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                    boolean isAdmin = false;
+                    boolean isNV = false;
+                    for (GrantedAuthority authority : authentication.getAuthorities()) {
+                        if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                            isAdmin = true;
+                            break;
+                        }
+                        else if (authority.getAuthority().equals("ROLE_NV")) {
+                            isNV = true;
+                            break;
+                        }
+                    }
+                    if (isAdmin) {
+                        response.sendRedirect("/doannganh/"); 
+                    }else if (isNV) {
+                        response.sendRedirect("/doannganh/"); 
+                    } else {
+                        response.sendRedirect("/login?error=accessDenied");
+                    }
+                }
+            });
+}
     @Bean
     public Cloudinary cloudinary() {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(

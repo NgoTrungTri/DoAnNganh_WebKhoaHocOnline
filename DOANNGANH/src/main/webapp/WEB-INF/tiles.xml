@@ -19,6 +19,12 @@
                        value="/WEB-INF/pages/users.jsp" />
     </definition>
     
+    <definition name="home" extends="baseLayout">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="content"
+                       value="/WEB-INF/pages/home.jsp" />
+    </definition>
+    
     <definition name="add-user" extends="baseLayout">
         <put-attribute name="title" value="Account" />
         <put-attribute name="content" value="/WEB-INF/pages/add-user.jsp" />

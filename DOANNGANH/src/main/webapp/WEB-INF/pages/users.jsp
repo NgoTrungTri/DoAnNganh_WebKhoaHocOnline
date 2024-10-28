@@ -10,10 +10,10 @@
 <h1 class="text-center text-success pt-0 mt-0 mb-3">QUẢN TRỊ NGƯỜI DÙNG</h1>
 
 <div class="float-start mb-3 mt-3">
-    <form id="filterForm" action="<c:url value='/' />" method="get" class="d-flex">
+    <form id="filterForm" action="<c:url value='/userpage' />" method="get" class="d-flex">
         <div class="me-3">
             <select name="userRole" id="userRole" class="form-select" style="width: 350px;">
-                <option value="" ${param.userRole == null || param.userRole == '' ? 'selected' : ''}>Tất cả</option>
+<!--                <option value="" ${param.userRole == null || param.userRole == '' ? 'selected' : ''}>Tất cả</option>-->
                 <option value="ROLE_NV" ${param.userRole == 'ROLE_NV' ? 'selected' : ''}>Nhân Viên</option>
                 <option value="ROLE_GV" ${param.userRole == 'ROLE_GV' ? 'selected' : ''}>Giáo Viên</option>
                 <option value="ROLE_HV" ${param.userRole == 'ROLE_HV' ? 'selected' : ''}>Học Viên</option>       
@@ -59,7 +59,7 @@
 
         if (selectedUserRole === "") {
             event.preventDefault();
-            window.location.href = '<c:url value="/" />';
+            window.location.href = '<c:url value="/userpage" />';
         }
     });
 

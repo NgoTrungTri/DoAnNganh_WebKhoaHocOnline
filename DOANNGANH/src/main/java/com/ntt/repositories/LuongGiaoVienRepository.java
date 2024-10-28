@@ -5,8 +5,8 @@
 package com.ntt.repositories;
 
 import com.ntt.pojo.Luonggiaovien;
+import com.ntt.pojo.UserLoaigiaovien;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,6 +20,8 @@ public interface LuongGiaoVienRepository {
     void update(Luonggiaovien luongGiaoVien);
     
     boolean isGiaoVienCoHuu(int idGiaoVien);
+    
+    void createLoaiGiaoVien(UserLoaigiaovien loaiGV);
     
     ////Bảng lương
     public int countGioDayTrongThang(int giaoVienId);

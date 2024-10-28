@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authApi, endpoints } from '../../configs/APIs';
-import Spinner from '../commons/MySpinner'; // Nhập Spinner ở đây
+import Spinner from '../commons/MySpinner';
 import './TeacherBlogs.css';
 
 const TeacherBlogs = () => {
     const [blogs, setBlogs] = useState([]);
     const [myBlogs, setMyBlogs] = useState([]);
-    const [loading, setLoading] = useState(true); // Thêm trạng thái loading
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -90,6 +90,7 @@ const TeacherBlogs = () => {
                                     <div className="card-body">
                                         <h5 className="card-title text-primary">{blog.tieuDe}</h5>
                                         <p className="card-text text-muted">{new Date(blog.ngayDang).toLocaleDateString('vi-VN')}</p>
+                                        <p className="card-text text-muted">{blog.noiDungPhanHoi}</p>
                                         <button
                                             className="btn btn-outline-primary w-100"
                                             onClick={() => {

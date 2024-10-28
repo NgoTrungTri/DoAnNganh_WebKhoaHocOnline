@@ -45,6 +45,7 @@ com\ntt\pojo\KhoahocKhuyenmai.class
 com\ntt\services\impl\DeCuongServicesImpl.class
 com\ntt\formatter\ChucVuFormatter.class
 com\ntt\pojo\Binhluan_.class
+com\ntt\configs\SpringSercurityConfig$1.class
 com\ntt\repositories\LuongGiaoVienRepository.class
 com\ntt\pojo\UserLoaigiaovien.class
 com\ntt\pojo\KhuyenmaiUser_.class

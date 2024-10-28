@@ -5,22 +5,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 
-<!DOCTYPE html>
-<head>
-    <style>
-        .is-invalid {
-            border-color: #dc3545; /* Đổi màu viền khi có lỗi */
-        }
-
-        .invalid-feedback {
-            color: #dc3545; /* Màu chữ cho thông báo lỗi */
-            display: block; /* Hiển thị thông báo lỗi */
-        }
-    </style>
-</head>
 <h1 class="text-center text-success mt-1">
     <c:choose>
         <c:when test="${user.id > 0}">CẬP NHẬT THÔNG TIN NGƯỜI DÙNG</c:when>
@@ -28,10 +15,14 @@
     </c:choose>
 </h1>
 
+<div id="errorAlert" class="alert alert-danger" role="alert" style="text-align: center; display: ${not empty errorMessage ? 'block' : 'none'};">
+    ${errorMessage}
+</div>
 
 <c:url value="/add-user" var="action" />
-<form:form method="post" action="${action}" modelAttribute="user" enctype="multipart/form-data">
+<form:form method="post" action="${action}" modelAttribute="user" enctype="multipart/form-data" onsubmit="return validateForm()">
     <form:errors path="*" element="div" cssClass="alert alert-danger" />
+    
     <div class="form-floating mb-3 mt-3">
         <form:input class="form-control" id="username" placeholder="Tên đăng nhập" path="username" />
         <label for="username">Tên đăng nhập</label>
@@ -52,7 +43,7 @@
 
     <div class="form-floating mb-3 mt-3">
         <form:input class="form-control" id="ten" placeholder="Nhập tên" path="ten" />
-        <label for="name">Tên</label>
+        <label for="ten">Tên</label>
         <div class="invalid-feedback"></div>
     </div>
 
@@ -63,16 +54,9 @@
     </div>
 
     <div class="form-floating mb-3 mt-3">
-        <form:select class="form-select" id="chucVu" name="chucVu" path="chucVuId"  onchange="setUserRole()">
-            <c:forEach items="${chucVu}" var="chucVu">
-                <c:choose>
-                    <c:when test="${chucVu.id==user.chucVuId.id}">
-                        <option value="${chucVu.id}" selected>${chucVu.chucVu}</option>
-                    </c:when>
-                    <c:otherwise>
-                        <option value="${chucVu.id}">${chucVu.chucVu}</option>
-                    </c:otherwise>
-                </c:choose>
+        <form:select class="form-select" id="chucVu" name="chucVu" path="chucVuId" onchange="setUserRole()">
+            <c:forEach items="${chucVu}" var="chucVuItem">
+                <option value="${chucVuItem.id}" <c:if test="${chucVuItem.id == user.chucVuId.id}">selected</c:if>>${chucVuItem.chucVu}</option>
             </c:forEach>
         </form:select>
         <label for="chucVu">Chức Vụ</label>
@@ -94,15 +78,14 @@
         <form:input type="file" class="form-control" id="avatar" path="file"/>
         <label for="avatar">Avatar</label>
         <div class="invalid-feedback"></div>
-
         <c:if test="${user.id > 0}">
             <img src="${user.avatar}" width="100" class="img-fluid"/>
         </c:if>
     </div>
 
     <form:hidden id="userRole" path="userRole" />
+    <form:hidden path="ngayTao" />
 
-    <form:hidden path="ngayTao" />    
     <div class="form-floating">
         <button class="btn btn-info mt-1" type="submit">
             <c:choose>
@@ -111,10 +94,21 @@
             </c:choose>
         </button>
         <form:hidden path="id"></form:hidden>
-        </div>
+    </div>
 </form:form>
-<script src="<c:url value="/js/script.js"/>"></script>
+
+<script src="<c:url value='/js/script.js'/>"></script>
 <script>
+    function validateForm() {
+        const errorAlert = document.getElementById("errorAlert");
+        if (errorAlert.textContent.trim() !== "") {
+            errorAlert.style.display = "block";
+            return false; // Ngăn không cho form submit
+        }
+        errorAlert.style.display = "none"; // Ẩn thông báo nếu không có lỗi
+        return true; // Cho phép form submit
+    }
+
     function setUserRole() {
         const chucVuSelect = document.getElementById("chucVu");
         const userRoleInput = document.getElementById("userRole");
@@ -137,13 +131,13 @@
                 role = "ROLE_HV";
                 break;
             default:
-                role = "ROLE_HV"; // Vai trò mặc định
+                role = "ROLE_HV"; 
         }
 
-        // Cập nhật giá trị userRole dựa trên chức vụ đã chọn
-        userRoleInput.value = role;
+        userRoleInput.value = role; // Cập nhật giá trị userRole dựa trên chức vụ đã chọn
     }
 
-    // Gọi hàm này khi trang được load để set giá trị đúng khi cập nhật
-    window.onload = setUserRole;
+    window.onload = setUserRole; // Gọi hàm này khi trang được load
 </script>
+
+

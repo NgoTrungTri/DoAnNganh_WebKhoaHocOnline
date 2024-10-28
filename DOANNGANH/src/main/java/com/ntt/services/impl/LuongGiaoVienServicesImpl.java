@@ -5,10 +5,10 @@
 package com.ntt.services.impl;
 
 import com.ntt.pojo.Luonggiaovien;
+import com.ntt.pojo.UserLoaigiaovien;
 import com.ntt.repositories.LuongGiaoVienRepository;
 import com.ntt.services.LuongGiaoVienServices;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +55,11 @@ public class LuongGiaoVienServicesImpl implements LuongGiaoVienServices{
     public Luonggiaovien findByGiaoVienId(int i) {
         return this.luongGVRepo.findByGiaoVienId(i);
     }
+
+    @Override
+    public void createLoaiGiaoVien(UserLoaigiaovien ul) {
+        this.luongGVRepo.createLoaiGiaoVien(ul);
+    }
+    
     
 }
