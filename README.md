@@ -1,55 +1,59 @@
-README - Đồ Án Ngành Website Trung Tâm Ngoại Ngữ - Tin Học
-1. Giới Thiệu
-Tên dự án: Website Trung Tâm Ngoại Ngữ - Tin Học.
-Mô tả: Đây là một website mô tả việc bán các khóa học cho các học viên và đăng các bài đăng kiến thức cho người dùng.
+# DoAnNganh_WebKhoaHocOnline
 
-2. Công Nghệ Sử Dụng
-Front-end: ReactJS.
- Back-end: Spring MVC.
-Cơ sở dữ liệu: MySQL, Firebase.
+**DoAnNganh_WebKhoaHocOnline** is a capstone project website for online course management, developed using SpringMVC technology. The website focuses on providing online courses in foreign languages and information technology.
 
+## 🌐 Overview
 
-3. Cài Đặt và Sử Dụng
-Yêu cầu hệ thống:
-Không có yêu cầu đặc biệt nào.
-Cài đặt:
-Sử dụng MySQL Workbench 8.0, download file DatabaseDoAnNganh.sql về là thực hiện Import vào để có cơ sở dữ liệu.
-Sử dụng IDE Netbean để khởi chạy dự án DOANNGANH phía backend, sử dụng bản JDK 14.
-Sử dụng IDE Visual Studio Code để khởi chạy dự án doannganhweb cho phát triển front-end.
-Chạy dự án:
-Build lần đầu và Run để chạy thư mục.
+This web application allows users to:
+- Browse and enroll in various online courses in language and IT.
+- Manage their profiles and track learning progress.
+- Access course content and resources.
+- Administrators can manage users, courses, and content efficiently.
 
+## 🚀 Features
 
+- User registration and authentication.
+- Course browsing and detailed course pages.
+- Online enrollment and learning progress tracking.
+- Admin dashboard for course and user management.
+- Responsive design for seamless experience across devices.
 
-4. Cấu Trúc Thư Mục
-Mô tả cấu trúc thư mục của dự án:
-DOANNGANH là thư mục của back-end Java.
-Doannganhweb là thư mục của front-end ReactJS.
+## 🛠️ Technologies Used
 
-5. Thành Viên Phát Triển
-Danh sách thành viên:
-Ngô Trung Trí – 2151013102.
-Giảng viên hướng dẫn:
-Thầy Lưu Quang Phương.
+- Java, SpringMVC
+- JSP, HTML, CSS, JavaScript
+- MySQL (or other relational database)
+- Maven (for project management)
 
-6. Liên Hệ
-Thông tin liên hệ của nhóm phát triển hoặc người chịu trách nhiệm chính:
-Email: ngotrungtri1234@gmail.com.
-Số điện thoại: 0868841815.
-				
+## ⚡ Getting Started
 
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/NgoTrungTri/DoAnNganh_WebKhoaHocOnline.git
+   ```
 
+2. **Open the project in your favorite IDE (e.g., IntelliJ IDEA, Eclipse) with Java and Spring support.**
 
+3. **Configure your database connection in the application settings.**
 
+4. **Build the project using Maven:**
+   ```bash
+   mvn clean install
+   ```
 
+5. **Run the application on a local server (e.g., Apache Tomcat).**
 
+6. **Access the website via your browser (typically at http://localhost:8080).**
 
+## 🤝 Contribution
 
+Contributions, feedback, and suggestions are welcome!  
+Feel free to fork this repository and submit pull requests.
 
+## 📄 License
 
+> **Note:** No license information is currently specified.
 
+---
 
-
-
-
-
+Made with 💻 by [NgoTrungTri](https://github.com/NgoTrungTri)
