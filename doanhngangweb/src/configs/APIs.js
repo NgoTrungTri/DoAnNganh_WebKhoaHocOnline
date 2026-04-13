@@ -1,7 +1,7 @@
 import axios from "axios";
 import cookie from "react-cookies";
 
-const BASE_URL = 'http://localhost:8080/doannganh/';
+const BASE_URL = 'http://localhost:8080/EJ_Commerce/';
 
 export const endpoints = {
 
@@ -61,5 +61,5 @@ export const authApi = () => {
 }
 
 export default axios.create({
-    baseURL: 'http://localhost:8080/doannganh/'
+    baseURL: 'http://localhost:8080/EJ_Commerce/'
 });

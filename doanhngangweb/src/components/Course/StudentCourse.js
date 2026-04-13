@@ -83,7 +83,7 @@ const StudentCourse = () => {
             </div>
 
             {/* Các khóa học sắp tới */}
-            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Bạn Sắp Tới</h1>
+            <h1 className='newLine' style={{ paddingTop: 20, paddingBottom: 30 }}>Các Khóa Học Của Bạn Sắp Tới</h1>
             <div className="row">
                 {coursesSapToi.length > 0 ? (
                     coursesSapToi.map((course) => (

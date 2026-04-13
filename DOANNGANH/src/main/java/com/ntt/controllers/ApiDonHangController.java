@@ -82,7 +82,7 @@ public class ApiDonHangController {
             }
 
             // Tạo URL thanh toán VNPay
-            String ipAddr = "171.227.36.182";
+            String ipAddr = "42.114.201.64"; //171.227.36.182
             String randomOrderId = UUID.randomUUID().toString(); // Tạo mã ngẫu nhiên với UUID
             String paymentUrl = VNPay.createPaymentUrl(randomOrderId, (int) khoaHoc.getGiaTien(), ipAddr);
 

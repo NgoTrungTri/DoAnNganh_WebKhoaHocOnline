@@ -34,8 +34,8 @@ public class VNPayRepositoryImpl implements VNPayRepository {
 
     @Override
     public String createPaymentUrl(String orderId, int amount, String ipAddr) {
-        String vnp_TmnCode = "CQLBZ0FI";
-        String vnp_HashSecret = "9BNVDSRH2LTL30NHN1QKK0XMPZIH5TH0";
+        String vnp_TmnCode = "OGTYON8X";
+        String vnp_HashSecret = "OGQKEX4KHKQZRVW0TYNJBF7KMSO943PM";
         String vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";

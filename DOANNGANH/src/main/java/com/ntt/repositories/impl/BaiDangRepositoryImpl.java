@@ -30,7 +30,7 @@ public class BaiDangRepositoryImpl implements BaiDangRepository {
     @Override
     public List<Baidangvanban> findByTrangThai(String trangThai) {
         Session session = sessionFactory.getObject().getCurrentSession();
-        String hql = "FROM Baidangvanban b WHERE b.trangThai = :trangThai";
+        String hql = "FROM Baidangvanban b WHERE b.trangThai = :trangThai ORDER BY b.id DESC";
         Query query = session.createQuery(hql);
         query.setParameter("trangThai", trangThai);
         return query.list();

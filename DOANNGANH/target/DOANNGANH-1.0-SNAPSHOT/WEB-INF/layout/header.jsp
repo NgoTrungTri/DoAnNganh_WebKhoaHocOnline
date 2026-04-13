@@ -3,8 +3,8 @@
 
 <nav class="navbar navbar-expand-sm bg-white navbar-whitesmoke fixed-top shadow-navbar" style="padding: 0; margin: 0">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <a href="/">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/">
+            <a href="${pageContext.request.contextPath}/">
                 <img class="ft-logo" src="https://res.cloudinary.com/dhrkxbsmh/image/upload/v1724748091/BannerDAN_uidhrp.jpg" alt loading="eager" style="width: 40px; height: 40px">
             </a>
         </a>

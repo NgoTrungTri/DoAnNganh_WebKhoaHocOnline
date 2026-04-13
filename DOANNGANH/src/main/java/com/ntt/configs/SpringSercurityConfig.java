@@ -14,6 +14,8 @@ import java.io.InputStream;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -80,7 +82,7 @@ public class SpringSercurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable();
 //    }
     @Override
-protected void configure(HttpSecurity http) throws Exception {
+protected void configure(@NonNull HttpSecurity http) throws Exception {
     http.formLogin()
             .usernameParameter("username")
             .passwordParameter("password")
@@ -100,6 +102,7 @@ protected void configure(HttpSecurity http) throws Exception {
             .successHandler(new AuthenticationSuccessHandler() {
                 @Override
                 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                    String contextPath = request.getContextPath();
                     boolean isAdmin = false;
                     boolean isNV = false;
                     for (GrantedAuthority authority : authentication.getAuthorities()) {
@@ -113,11 +116,11 @@ protected void configure(HttpSecurity http) throws Exception {
                         }
                     }
                     if (isAdmin) {
-                        response.sendRedirect("/doannganh/"); 
-                    }else if (isNV) {
-                        response.sendRedirect("/doannganh/"); 
+                        response.sendRedirect(contextPath + "/");
+                    } else if (isNV) {
+                        response.sendRedirect(contextPath + "/");
                     } else {
-                        response.sendRedirect("/login?error=accessDenied");
+                        response.sendRedirect(contextPath + "/login?error=accessDenied");
                     }
                 }
             });
